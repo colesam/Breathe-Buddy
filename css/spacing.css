@@ -1,0 +1,53 @@
+.margin-sm {
+  margin: 8px;
+}
+
+.margin-md {
+  margin: 24px;
+}
+
+.padding-sm {
+    padding: 8px;
+}
+
+.padding-md {
+  padding: 24px;
+}
+
+.page-padding{
+  padding-top: 60px;
+}
+
+.no-extra-space {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.no-margin {
+  margin: 0;
+}
+.no-padding {
+  padding: 0;
+}
+
+.padding-side-sm {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.padding-side-md {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.clear-both {
+  clear: both;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}

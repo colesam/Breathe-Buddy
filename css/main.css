@@ -1,0 +1,52 @@
+body {
+  font-family: Arial !important;
+  font-size: 12pt !important;
+}
+
+.nice-blue{
+  background-color: aliceblue;
+}
+
+.my-navbar {
+  background-color: #80B0EE;
+  height: 60px;
+}
+
+
+
+.border-basic-sm {
+  border: black solid 1pt;
+}
+
+.border-basic-md {
+  border: black solid 2pt;
+}
+.border-basic-lg {
+  border: black solid 4pt;
+
+}
+
+a:link  {
+  color: blue;
+}
+a:visited {
+  color: grey;
+}
+
+.full-height {
+  min-height: 100vh !important;
+}
+
+.full-width {
+  min-width: 100vh !important;
+}
+
+
+.rounded {
+  border-radius: 12px;
+
+}
+
+.pos-fixed{
+  position: fixed !important;
+}
