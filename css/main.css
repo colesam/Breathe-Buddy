@@ -1,6 +1,5 @@
 body {
   font-family: Arial !important;
-  font-size: 12pt !important;
 }
 
 .nice-blue{
@@ -11,8 +10,6 @@ body {
   background-color: #80B0EE;
   height: 60px;
 }
-
-
 
 .border-basic-sm {
   border: black solid 1pt;
