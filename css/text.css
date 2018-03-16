@@ -3,15 +3,17 @@
 }
 
 .text-sm {
-  font-size: 0.7rem;
-
+    font-size: 0.7rem;
 }
 
 .text-md {
-  font-size: 1rem;
-
+    font-size: 1rem;
 }
 
 .text-lg {
-  font-size: 1.3rem;
+    font-size: 1.3rem;
+}
+
+.montserrat {
+    font-family: 'Montserrat', sans-serif;
 }
