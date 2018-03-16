@@ -5,24 +5,33 @@
         <title>Air Quality Web Application</title>
         
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
 
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        
+        <!-- Bootstrap -->
+        <link href="external/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
         <!-- Custom Style -->
         <link rel="stylesheet" href="css/main.css"/>
         <link rel="stylesheet" href="css/spacing.css"/>
         <link rel="stylesheet" href="css/text.css"/>
-
-        <!-- Bootstrap -->
-        <link href="external/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="css/nav.css">
     </head>
 
-    <body ng-app="airQuality" ng-controller="appCtrl" ng-init="init()">
-        Index
-        <div ng-include="'html/air-quality.html'">
-            <!-- This will be loaded on command -->
+    <body class="open-sans no-margin" ng-app="airQuality" ng-controller="appCtrl" ng-init="init()">
+        <nav class="d-flex flex-row align-items-center justify-content-end">
+            <h1 class="nav-logo text-xl">Breathe Buddy</h1>
+            <a href="#" class="nav-link transitions active text-lg">App</a>
+            <a href="#" class="nav-link transitions text-lg">About the Project</a>
+        </nav>
+        <div class="container page-padding">
+            <div ng-include="'html/air-quality.html'">
+                <!-- This will be loaded on command -->
+            </div>
         </div>
     </body>
 

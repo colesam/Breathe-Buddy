@@ -14,6 +14,20 @@
     font-size: 1.3rem;
 }
 
-.montserrat {
-    font-family: 'Montserrat', sans-serif;
+.text-xl {
+    font-size: 2rem;
+}
+
+.open-sans {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.title {
+    color: white;
+    margin: 0;
+    font-weight: 700;
+}
+
+.bold {
+    font-weight: 700;
 }

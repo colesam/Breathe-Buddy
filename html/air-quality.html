@@ -1,5 +1,116 @@
 <div ng-controller="airQualityCtrl" ng-init="init()">
     <!-- Everything for the air quality page -->
-    Air Quality
-
+    <div class="row d-flex align-items-stretch">
+        <div class="col-7 padding-sm">
+            <div class="ui-card">
+                <div class="card-title">
+                    <h2 class="title text-lg">Choose Location</h2>
+                </div>
+                <div class="card-content padding-top-md">
+                    <div class="form-group">
+                        <h3 class="bold text-md no-margin">Address</h3>
+                        <input class="form-control" type="text" name="address"/>
+                    </div>
+                    <div class="form-group">
+                        <h3 class="bold text-md no-margin">Location</h3>
+                        <input class="form-control" type="text" name="location"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 padding-sm">
+            <div class="ui-card">
+                <div class="card-title">
+                    <h2 class="title text-lg">Choose Date</h2>
+                </div>
+                <div class="card-content d-flex flex-column justify-content-center align-items-center">
+                    <div id="date-picker">
+                        <div class="month d-flex justify-content-between">
+                            <i class="fas fa-chevron-left transitions"></i>
+                            <h3 class="bold text-md no-margin text-center">March</h3>
+                            <i class="fas fa-chevron-right transitions unavailable"></i>
+                        </div>
+                        <table>
+                            <tr id="week1">
+                                <td class="gray-date">25</td>
+                                <td class="gray-date">26</td>
+                                <td class="gray-date">27</td>
+                                <td class="gray-date">28</td>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                            </tr>
+                            <tr id="week2">
+                                <td>04</td>
+                                <td>05</td>
+                                <td>06</td>
+                                <td>07</td>
+                                <td>08</td>
+                                <td>09</td>
+                                <td>10</td>
+                            </tr>
+                            <tr id="week3">
+                                <td>11</td>
+                                <td>12</td>
+                                <td>13</td>
+                                <td>14</td>
+                                <td>15</td>
+                                <td>16</td>
+                                <td>17</td>
+                            </tr>
+                            <tr id="week4">
+                                <td class="selected">18</td>
+                                <td class="unavailable">19</td>
+                                <td class="unavailable">20</td>
+                                <td class="unavailable">21</td>
+                                <td class="unavailable">22</td>
+                                <td class="unavailable">23</td>
+                                <td class="unavailable">24</td>
+                            </tr>
+                            <tr id="week5">
+                                <td class="unavailable">25</td>
+                                <td class="unavailable">26</td>
+                                <td class="unavailable">27</td>
+                                <td class="unavailable">28</td>
+                                <td class="unavailable">29</td>
+                                <td class="unavailable">30</td>
+                                <td class="unavailable">31</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex align-items-stretch">
+        <div class="col-7 padding-sm">
+            <div class="ui-card map">
+                This is where the map goes
+            </div>
+        </div>
+        <div class="col-5 padding-sm">
+            <div class="ui-card">
+                <div class="card-title">
+                    <h2 class="title text-lg">Results</h2>
+                </div>
+                <div class="card-content">
+                    <div class="data">
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                        <p>Data line 1: CO2 - 30% | O2 - 50% | NaCl - 20%</p>
+                    </div>
+                    <h3 class="bold text-md no-margin">Filter</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

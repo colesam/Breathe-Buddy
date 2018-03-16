@@ -15,7 +15,11 @@
 }
 
 .page-padding{
-    padding-top: 60px;
+    padding-top: 30px;
+}
+
+.padding-top-md {
+    padding-top: 25px;
 }
 
 .no-extra-space {
