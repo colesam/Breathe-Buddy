@@ -9,7 +9,10 @@ function airQualityControllerFunction($scope, $http) {
 
 
     $scope.init = function (){
-        $scope.getAirQuality(undefined, undefined, undefined, 'co', {latitude: 43.34,  longitude: 23.04}, 2500, undefined, undefined, undefined, undefined, 5);
+        $scope.getAirQuality(undefined, undefined, undefined, undefined, {latitude: 44.9778,  longitude: 93.2650}, 10, undefined, undefined, undefined, undefined, 5, function (data) {
+            console.log('Obtained data:');
+            console.log(data);
+        });
     };
 
 
@@ -44,29 +47,26 @@ function airQualityControllerFunction($scope, $http) {
             Default value: 100
     */
 
-    $scope.getAirQuality = function(country, city, location, parameter, coordinates, radius, valueFrom, valueTo, dateFrom, dateTo, limit) {
+    $scope.getAirQuality = function(country, city, location, parameter, coordinates, radius, valueFrom, valueTo, dateFrom, dateTo, limit, callBack) {
+        console.log('Getting data...');
         $http({
             method: 'GET',
             url: $scope.airQualityHome + $scope.measurements,
-            parameter:  {
-                            country:        country,
-                            city:           city,
-                            location:       location,
-                            parameter:      parameter,
-                            coordinates:    coordinates,
+            params:  {
+                            //country:        country,
+                            //city:           city,
+                            //location:       location,
+                            //parameter:      parameter,
+                            coordinates:     coordinates,
                             radius:         radius,
-                            value_from:     valueFrom,
-                            value_to:       valueTo,
-                            date_from:      dateFrom,
-                            date_to:        dateTo,
-                            limit:          limit
+                            //value_from:     valueFrom,
+                            //value_to:       valueTo,
+                            //date_from:      dateFrom,
+                            //date_to:        dateTo,
+                            //limit:          limit
                         }
         }).then(function successCallback(response) {
-
-            console.log(response.data.results);
-
-
-
+            callBack(response.data.results);
         }, function errorCallback(response) {
             console.log('Failed to obtained air quality data!')
         });
