@@ -14,22 +14,41 @@ function airQualityControllerFunction($scope, $http) {
 
     /* User input */
     $scope.location = '';
-    $scope.address = '';
 
 
     /* Map Variables */
     $scope.map = null;
     $scope.markers = [];
+    $scope.geocoder = null;
+
 
 
     $scope.init = function (){
         $scope.mapInit();
     };
 
-    $scope.hitEnter = function(event){
-        if(event.keyCode === 13){
-            $('#map').attr('src', $scope.API_START + $scope.convertNameToAPI($scope[event.currentTarget.name]));
+    $scope.submitLocation = function(event){
+        if((event === undefined || event.keyCode === 13) && $scope.location.length > 0) {
+            $scope.getGeoCode($scope.location, function (result) {
+                $scope.map.setCenter({
+                    lat: result[0].geometry.location.lat(),
+                    lng: result[0].geometry.location.lng()
+                });
+            }, function (address) {
+                alert('Unable to find location: ' + address);
+            });
         }
+    };
+
+    $scope.getGeoCode = function(address, successCallback, failureCallback){
+        $scope.geocoder.geocode( { 'address': address}, function(result, status) {
+            if(status === 'OK' && result !== undefined && result.length > 0){
+                successCallback(result);
+            }
+            else{
+                failureCallback(address);
+            }
+        });
     };
 
 
@@ -39,6 +58,8 @@ function airQualityControllerFunction($scope, $http) {
             zoom: 10,
             center: {lat: 44.9778, lng: -93.2650}
         });
+
+        $scope.geocoder = new google.maps.Geocoder;
     };
 
 
