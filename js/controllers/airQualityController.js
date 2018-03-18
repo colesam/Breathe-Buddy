@@ -3,18 +3,52 @@
  */
 function airQualityControllerFunction($scope, $http) {
 
+    /* Air Quality API Constants */
     $scope.airQualityHome = 'https://api.openaq.org/v1/';
     $scope.measurements = 'measurements';
 
+    /* Google Maps API Constants */
+    $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
+    $scope.API_LOC = 'https://www.google.com/maps/embed/v1/place';
+    $scope.API_START = $scope.API_LOC + '?key=' + $scope.API_KEY + '&q=';
 
+    /* User input */
+    $scope.location = '';
+    $scope.address = '';
 
     $scope.init = function (){
-        $scope.getAirQuality(undefined, undefined, undefined, undefined, {latitude: 44.9778,  longitude: 93.2650}, 10, undefined, undefined, undefined, undefined, 5, function (data) {
-            console.log('Obtained data:');
-            console.log(data);
-        });
+        console.log('in here');
+        $('#map').attr('src', $scope.API_START + 'St.+Paul,+Minnesota');
+        //$scope.getAirQuality(undefined, undefined, undefined, undefined, {latitude: 44.9778,  longitude: 93.2650}, 10, undefined, undefined, undefined, undefined, 5, function (data) {
+        //    console.log('Obtained data:');
+        //    console.log(data);
+        //});
     };
 
+    $scope.hitEnter = function(event){
+        if(event.keyCode === 13){
+            $('#map').attr('src', $scope.API_START + $scope.convertNameToAPI($scope[event.currentTarget.name]));
+        }
+    };
+
+
+    $scope.convertNameToAPI = function(s){
+        var result;
+
+        result = '';
+        for(var i=0; i<s.length ;i++){
+            if(s.charAt(i) === ' '){
+                result += '+';
+            }
+            else{
+                result += s.charAt(i);
+            }
+        }
+
+
+
+        return result;
+    };
 
 
     /*
