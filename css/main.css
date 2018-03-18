@@ -59,6 +59,17 @@ i:hover {
     width: 100%;
 }
 
+.btn.form-control {
+    width: 100%;
+    border: 1px solid #77997e;
+}
+
+.btn-custom {
+    color: black;
+    margin-top: 25px;
+    background: #d9f4c7;
+}
+
 .data {
     background: #f9f9f9;
     border: 1px solid #a8a8a8;
