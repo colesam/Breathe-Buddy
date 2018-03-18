@@ -108,6 +108,7 @@ td:hover {
 
 .selected {
     border-bottom: 2px solid #a1edd5;
+    font-weight: 700;
 }
 
 .unavailable {
