@@ -2,7 +2,7 @@
     <!-- Everything for the air quality page -->
     <div class="row d-flex align-items-stretch">
         <div class="col-7 padding-sm">
-            <div class="ui-card">
+            <div id="input-card" class="ui-card">
                 <div class="card-title">
                     <h2 class="title text-lg">Choose Location</h2>
                 </div>
@@ -13,7 +13,7 @@
                     </div>
                     <div class="form-group">
                         <h3 class="bold text-md no-margin">Latitude / Longitude</h3>
-                        <input ng-model="location" ng-keyup="submitLocation($event);" class="form-control" type="text" name="location"/>                        
+                        <input id="latLngInput" ng-model="lat_lng" ng-keyup="submitLocation($event);" class="form-control" type="text" name="lat_lng"/>
                     </div>
                 </div>
             </div>

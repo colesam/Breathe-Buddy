@@ -14,22 +14,55 @@ function airQualityControllerFunction($scope, $http) {
 
     /* User input */
     $scope.location = '';
+    $scope.lat_lng = '';
 
 
     /* Map Variables */
     $scope.map = null;
     $scope.markers = [];
     $scope.geocoder = null;
+    $scope.fullscreen = false;
 
 
 
     $scope.init = function (){
         $scope.mapInit();
+
+        $scope.map.center_changed = $scope.updateLocation;
+
+        $scope.map.bounds_changed = function(){
+            var mapDivElement = $('#map').children().eq(0);
+            if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth){
+                if(!$scope.fullscreen){
+                    console.log('To Fullscreen');
+                    //update to fullscreen
+                    $('#input-card').addClass('fixed-card');
+
+                    $scope.fullscreen = true;
+                }
+            }
+            else{
+                if($scope.fullscreen){
+                    //update to non-fullscreen
+                    $('#input-card').removeClass('fixed-card');
+                    console.log('To non-fullscreen');
+
+                    $scope.fullscreen = false;
+                }
+            }
+        };
+
+    };
+
+    $scope.updateLocation = function(){
+        $scope.$apply(function(){
+            $scope.lat_lng = (Math.round($scope.map.center.lat() * 100) / 100) + ', ' + (Math.round($scope.map.center.lng() * 100) / 100);
+        });
     };
 
     $scope.submitLocation = function(event){
-        if((event === undefined || event.keyCode === 13) && $scope.location.length > 0) {
-            $scope.getGeoCode($scope.location, function (result) {
+        if(event.keyCode === 13 && $scope[event.currentTarget.name].length > 0) {
+            $scope.getGeoCode($scope[event.currentTarget.name], function (result) {
                 $scope.map.setCenter({
                     lat: result[0].geometry.location.lat(),
                     lng: result[0].geometry.location.lng()
@@ -54,12 +87,17 @@ function airQualityControllerFunction($scope, $http) {
 
     $scope.mapInit = function() {
         //creates a map centered at Minneapolis
+        var latitude  =  44.97;
+        var longitude = -93.26;
+
         $scope.map = new google.maps.Map(document.getElementById('map'), {
             zoom: 10,
-            center: {lat: 44.9778, lng: -93.2650}
+            center: {lat: latitude, lng: longitude}
         });
 
         $scope.geocoder = new google.maps.Geocoder;
+
+        $scope.lat_lng = latitude + ', ' + longitude;
     };
 
 
