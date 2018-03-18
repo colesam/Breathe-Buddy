@@ -16,8 +16,13 @@ function airQualityControllerFunction($scope, $http) {
     $scope.location = '';
     $scope.address = '';
 
+
+    /* Map Variables */
+    $scope.map = null;
+    $scope.markers = [];
+
+
     $scope.init = function (){
-        console.log('in here');
         $('#map').attr('src', $scope.API_START + 'St.+Paul,+Minnesota');
         //$scope.getAirQuality(undefined, undefined, undefined, undefined, {latitude: 44.9778,  longitude: 93.2650}, 10, undefined, undefined, undefined, undefined, 5, function (data) {
         //    console.log('Obtained data:');
@@ -30,6 +35,41 @@ function airQualityControllerFunction($scope, $http) {
             $('#map').attr('src', $scope.API_START + $scope.convertNameToAPI($scope[event.currentTarget.name]));
         }
     };
+
+    $scope.initMap = function() {
+        //todo do this better
+
+
+        setTimeout(function(){
+            var uluru = {lat: 44.9778, lng: -93.2650};
+            $scope.map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: uluru
+            });
+
+            $scope.markers.push(new google.maps.Marker({
+                position: uluru,
+                map: $scope.map
+            }));
+
+            setTimeout(function(){
+                $scope.markers.push(new google.maps.Marker({
+                    position: $scope.map.center,
+                    map: $scope.map
+                }));
+            }, 2000);
+        }, 500);
+
+        //$scope.map.setCenter(coordinates);
+
+
+
+        //var marker = new google.maps.Marker({
+        //    position: uluru,
+        //    map: map
+        //});
+    };
+
 
 
     $scope.convertNameToAPI = function(s){

@@ -108,6 +108,11 @@ td:hover {
     cursor: default;
 }
 
+.full-size{
+    width: 100%;
+    height: 100%;
+}
+
 /*.full-height {*/
 /*    min-height: 100vh !important;*/
 /*}*/

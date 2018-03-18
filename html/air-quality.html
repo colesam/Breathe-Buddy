@@ -85,12 +85,7 @@
     <div class="row d-flex align-items-stretch">
         <div class="col-7 padding-sm">
             <div class="ui-card map">
-                <iframe id="map"
-                        width="100%"
-                        height="100%"
-                        frameborder="0" style="border:0"
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ&q=Space+Needle,Seattle+WA" allowfullscreen>
-                </iframe>
+                <div id="map" class="full-size" ng-init="initMap()"></div>
             </div>
         </div>
         <div class="col-5 padding-sm">
@@ -119,3 +114,7 @@
         </div>
     </div>
 </div>
+
+
+<!-- Google API Scripts -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ"></script>
