@@ -59,10 +59,15 @@ function airQualityControllerFunction($scope, $http) {
         //  clone the #to-map row, updated id, and display-none
         clone = $('#to-map').clone();
         clone.attr('id', 'map-controls');
-        clone.removeClass('d-flex').addClass('d-none fixed');
+        clone.removeClass('d-flex').addClass('d-none');
+        
+        //  wrap the clone in a container div
+        element = $('<div></div>');
+        element.addClass('container');
+        element.append(clone);
         
         //  append clone to the inside of the map
-        $('#map div').append(clone);
+        $('#map div').append(element);
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
@@ -137,35 +142,7 @@ function airQualityControllerFunction($scope, $http) {
 
 
 
-<<<<<<< HEAD
-    $scope.mapInit = function() {
-        //creates a map centered at Minneapolis
-        var latitude    =  44.975;
-        var longitude   = -93.265;
-        var clone;
-        var element;
-=======
->>>>>>> 574cdf498b600e4683211f62f9c333c780bcfde2
 
-
-
-<<<<<<< HEAD
-        $scope.lat_lng = latitude + ', ' + longitude;
-        
-        //  clone the #to-map row, updated id, and display-none
-        clone = $('#to-map').clone();
-        clone.attr('id', 'map-controls');
-        clone.removeClass('d-flex').addClass('d-none');
-        
-        //  wrap the clone in a container div
-        element = $('<div></div>');
-        element.addClass('container');
-        element.append(clone);
-        
-        //  append clone to the inside of the map
-        $('#map div').append(element);
-=======
->>>>>>> 574cdf498b600e4683211f62f9c333c780bcfde2
 
 
 
