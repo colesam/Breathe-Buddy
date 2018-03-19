@@ -42,11 +42,8 @@ i:hover {
     padding: 15px 30px 15px 30px;
 }
 
-.fixed {
-    position: fixed;
-        top: 5px;
-        left: 5px;
-        
+#map-controls {
+    position: relative;
     z-index: 1;
 }
 

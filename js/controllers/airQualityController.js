@@ -93,6 +93,7 @@ function airQualityControllerFunction($scope, $http) {
         var latitude    =  44.975;
         var longitude   = -93.265;
         var clone;
+        var element;
 
         $scope.map = new google.maps.Map(document.getElementById('map'), {
             zoom: 10,
@@ -106,10 +107,15 @@ function airQualityControllerFunction($scope, $http) {
         //  clone the #to-map row, updated id, and display-none
         clone = $('#to-map').clone();
         clone.attr('id', 'map-controls');
-        clone.removeClass('d-flex').addClass('d-none fixed');
+        clone.removeClass('d-flex').addClass('d-none');
+        
+        //  wrap the clone in a container div
+        element = $('<div></div>');
+        element.addClass('container');
+        element.append(clone);
         
         //  append clone to the inside of the map
-        $('#map div').append(clone);
+        $('#map div').append(element);
 
         $scope.map.center_changed = $scope.updateLocation;
         $scope.map.bounds_changed = $scope.checkFullScreen;
