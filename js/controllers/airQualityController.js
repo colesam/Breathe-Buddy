@@ -36,6 +36,7 @@ function airQualityControllerFunction($scope, $http) {
     
     $scope.checkFullScreen = function(){
         var mapDivElement = $('#map').children().eq(0);
+        
         if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth){
             if(!$scope.fullscreen){
                 console.log('To Fullscreen');
