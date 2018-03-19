@@ -28,35 +28,37 @@ function airQualityControllerFunction($scope, $http) {
     $scope.init = function (){
         $scope.mapInit();
 
-        $scope.map.center_changed = $scope.updateLocation;
+        $scope.getAirQuality(undefined, undefined, undefined, undefined, '17.6599188,75.9063906', 2500, undefined, undefined, undefined, undefined, undefined, function(results){
+            console.log(results);
+        });
 
-        $scope.map.bounds_changed = function(){
-            var mapDivElement = $('#map').children().eq(0);
-            if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth){
-                if(!$scope.fullscreen){
-                    console.log('To Fullscreen');
-                    //update to fullscreen
-                    $('#input-card').addClass('fixed-card');
+    };
+    
+    $scope.checkFullScreen = function(){
+        var mapDivElement = $('#map').children().eq(0);
+        if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth){
+            if(!$scope.fullscreen){
+                console.log('To Fullscreen');
+                //update to fullscreen
+                $('#input-card').addClass('fixed-card');
 
-                    $scope.fullscreen = true;
-                }
+                $scope.fullscreen = true;
             }
-            else{
-                if($scope.fullscreen){
-                    //update to non-fullscreen
-                    $('#input-card').removeClass('fixed-card');
-                    console.log('To non-fullscreen');
+        }
+        else{
+            if($scope.fullscreen){
+                //update to non-fullscreen
+                $('#input-card').removeClass('fixed-card');
+                console.log('To non-fullscreen');
 
-                    $scope.fullscreen = false;
-                }
+                $scope.fullscreen = false;
             }
-        };
-
+        }
     };
 
     $scope.updateLocation = function(){
         $scope.$apply(function(){
-            $scope.lat_lng = (Math.round($scope.map.center.lat() * 100) / 100) + ', ' + (Math.round($scope.map.center.lng() * 100) / 100);
+            $scope.lat_lng = (Math.round($scope.map.center.lat() * 1000) / 1000) + ', ' + (Math.round($scope.map.center.lng() * 1000) / 1000);
         });
     };
 
@@ -87,8 +89,8 @@ function airQualityControllerFunction($scope, $http) {
 
     $scope.mapInit = function() {
         //creates a map centered at Minneapolis
-        var latitude  =  44.97;
-        var longitude = -93.26;
+        var latitude  =  44.975;
+        var longitude = -93.265;
 
         $scope.map = new google.maps.Map(document.getElementById('map'), {
             zoom: 10,
@@ -98,6 +100,9 @@ function airQualityControllerFunction($scope, $http) {
         $scope.geocoder = new google.maps.Geocoder;
 
         $scope.lat_lng = latitude + ', ' + longitude;
+
+        $scope.map.center_changed = $scope.updateLocation;
+        $scope.map.bounds_changed = $scope.checkFullScreen;
     };
 
 
@@ -174,7 +179,7 @@ function airQualityControllerFunction($scope, $http) {
                             //location:       location,
                             //parameter:      parameter,
                             coordinates:     coordinates,
-                            radius:         radius,
+                            radius:         radius//,
                             //value_from:     valueFrom,
                             //value_to:       valueTo,
                             //date_from:      dateFrom,
@@ -182,7 +187,7 @@ function airQualityControllerFunction($scope, $http) {
                             //limit:          limit
                         }
         }).then(function successCallback(response) {
-            callBack(response.data.results);
+            callBack(response);
         }, function errorCallback(response) {
             console.log('Failed to obtained air quality data!')
         });
