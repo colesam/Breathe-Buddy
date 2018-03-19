@@ -28,111 +28,18 @@ function airQualityControllerFunction($scope, $http) {
 
 
 
+
     $scope.init = function (){
         $scope.mapInit();
     };
 
 
-    $scope.updateClusters = function(){
-        $scope.markerCluterManager = new MarkerClusterer($scope.map, $scope.markers, $scope.MARKER_CLUSTER_OBJ);
-        $scope.updateLocation();
-    };
-
-    $scope.populateMarkers = function(data){
-        //clear old markers
-        $scope.markers = [];
-
-        for(var i=0; i<data.length; i++){
-            if(data[i] !== undefined){
-                if(data[i].coordinates !== undefined){
-                    $scope.placeMarker({lat: data[i].coordinates.latitude, lng: data[i].coordinates.longitude});
-                }
-            }
-        }
-
-        $scope.updateClusters();
-
-    };
-    
-    $scope.checkFullScreen = function(){
-        var mapDivElement = $('#map').children().eq(0);
-        
-        if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth) {
-            if(!$scope.fullscreen){
-                console.log('To Fullscreen');
-                //update to fullscreen
-                $('#map-controls').removeClass('d-none').addClass('d-flex');
-
-                $scope.fullscreen = true;
-            }
-        }
-        else{
-            if($scope.fullscreen) {
-                //update to non-fullscreen
-                $('#map-controls').removeClass('d-flex').addClass('d-none');
-                console.log('To non-fullscreen');
-
-                $scope.fullscreen = false;
-            }
-        }
-    };
 
 
-    $scope.getRadius = function(bounds){
-        // r = radius of the earth in km
-        var r = 6378.8;
 
-        // degrees to radians (divide by 57.2958)
-        var ne_lat = bounds.getNorthEast().lat() / 57.2958;
-        var ne_lng = bounds.getNorthEast().lng() / 57.2958;
-        var c_lat = bounds.getCenter().lat() / 57.2958;
-        var c_lng = bounds.getCenter().lng() / 57.2958;
-
-        // distance = circle radius from center to Northeast corner of bounds
-        var r_km = r * Math.acos(
-            Math.sin(c_lat) * Math.sin(ne_lat) +
-            Math.cos(c_lat) * Math.cos(ne_lat) * Math.cos(ne_lng - c_lng)
-        );
-
-        return r_km *1000 // radius in meters
-    };
-
-
-    $scope.updateMap = function(){
-        //get radius and set max radius at 10,000
-        var radius = $scope.getRadius($scope.map.getBounds());
-        radius = Math.round(Math.min(radius, 100000));
-        $scope.getAirQuality($scope.populateMarkers, $scope.lat_lng, radius , undefined, '2018-3-18', '2018-3-19', 10000);
-    };
-
-    $scope.updateLocation = function(){
-        $scope.loading = false;
-        $scope.lat_lng = (Math.round($scope.map.center.lat() * 1000) / 1000) + ', ' + (Math.round($scope.map.center.lng() * 1000) / 1000);
-    };
-
-    $scope.submitLocation = function(event){
-        if(event.keyCode === 13 && $scope[event.currentTarget.name].length > 0) {
-            $scope.getGeoCode($scope[event.currentTarget.name], function (result) {
-                $scope.map.setCenter({
-                    lat: result[0].geometry.location.lat(),
-                    lng: result[0].geometry.location.lng()
-                });
-            }, function (address) {
-                alert('Unable to find location: ' + address);
-            });
-        }
-    };
-
-    $scope.getGeoCode = function(address, successCallback, failureCallback){
-        $scope.geocoder.geocode( { 'address': address}, function(result, status) {
-            if(status === 'OK' && result !== undefined && result.length > 0){
-                successCallback(result);
-            }
-            else{
-                failureCallback(address);
-            }
-        });
-    };
+    /*************************************************** **************************************************************/
+    /*******************************************   Basic Map Functions   **********************************************/
+    /*************************************************** **************************************************************/
 
 
     $scope.mapInit = function() {
@@ -161,6 +68,89 @@ function airQualityControllerFunction($scope, $http) {
         $scope.map.bounds_changed = $scope.checkFullScreen;
     };
 
+    $scope.getGeoCode = function(address, successCallback, failureCallback){
+        $scope.geocoder.geocode( { 'address': address}, function(result, status) {
+            if(status === 'OK' && result !== undefined && result.length > 0){
+                successCallback(result);
+            }
+            else{
+                failureCallback(address);
+            }
+        });
+    };
+
+    $scope.checkFullScreen = function(){
+        var mapDivElement = $('#map').children().eq(0);
+
+        if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth) {
+            if(!$scope.fullscreen){
+                console.log('To Fullscreen');
+                //update to fullscreen
+                $('#map-controls').removeClass('d-none').addClass('d-flex');
+
+                $scope.fullscreen = true;
+            }
+        }
+        else{
+            if($scope.fullscreen) {
+                //update to non-fullscreen
+                $('#map-controls').removeClass('d-flex').addClass('d-none');
+                console.log('To non-fullscreen');
+
+                $scope.fullscreen = false;
+            }
+        }
+    };
+
+    $scope.updateMap = function(){
+        //get radius and set max radius at 10,000
+        var radius = $scope.getRadius($scope.map.getBounds());
+        radius = Math.round(Math.min(radius, 100000));
+        $scope.getAirQuality($scope.populateMarkers, $scope.lat_lng, radius , undefined, '2018-3-18', '2018-3-19', 10000);
+    };
+
+    $scope.updateLocation = function(){
+        $scope.loading = false;
+        $scope.lat_lng = (Math.round($scope.map.center.lat() * 1000) / 1000) + ', ' + (Math.round($scope.map.center.lng() * 1000) / 1000);
+    };
+
+    $scope.submitLocation = function(event){
+        if(event.keyCode === 13 && $scope[event.currentTarget.name].length > 0) {
+            $scope.getGeoCode($scope[event.currentTarget.name], function (result) {
+                $scope.map.setCenter({
+                    lat: result[0].geometry.location.lat(),
+                    lng: result[0].geometry.location.lng()
+                });
+            }, function (address) {
+                alert('Unable to find location: ' + address);
+            });
+        }
+    };
+
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*************************************************** **************************************************************/
+    /*******************************************   Handling Markers   *************************************************/
+    /*************************************************** **************************************************************/
+
 
     /*
         Places a maker at specified lat and lng
@@ -175,22 +165,44 @@ function airQualityControllerFunction($scope, $http) {
         }
     };
 
-
-    $scope.convertNameToAPI = function(s){
-        var result;
-
-        result = '';
-        for(var i=0; i<s.length ;i++){
-            if(s.charAt(i) === ' '){
-                result += '+';
-            }
-            else{
-                result += s.charAt(i);
-            }
-        }
-        return result;
+    $scope.updateClusters = function(){
+        $scope.markerCluterManager = new MarkerClusterer($scope.map, $scope.markers, $scope.MARKER_CLUSTER_OBJ);
+        $scope.updateLocation();
     };
 
+    $scope.populateMarkers = function(data){
+        //clear old markers
+        $scope.markers = [];
+
+        for(var i=0; i<data.length; i++){
+            if(data[i] !== undefined){
+                if(data[i].coordinates !== undefined){
+                    $scope.placeMarker({lat: data[i].coordinates.latitude, lng: data[i].coordinates.longitude});
+                }
+            }
+        }
+
+        $scope.updateClusters();
+
+    };
+
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+    /*************************************************** **************************************************************/
+    /*******************************************   Air Quality Stuff   ************************************************/
+    /*************************************************** **************************************************************/
 
     /*
         Information about the API can be found at https://docs.openaq.org/#api-Measurements-GetMeasurements
@@ -253,11 +265,66 @@ function airQualityControllerFunction($scope, $http) {
     };
 
 
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+    /*************************************************** **************************************************************/
+    /*******************************************   Basic Functions   **************************************************/
+    /*************************************************** **************************************************************/
+
+    $scope.convertNameToAPI = function(s){
+        var result;
+
+        result = '';
+        for(var i=0; i<s.length ;i++){
+            if(s.charAt(i) === ' '){
+                result += '+';
+            }
+            else{
+                result += s.charAt(i);
+            }
+        }
+        return result;
+    };
+
+    $scope.getRadius = function(bounds){
+        // r = radius of the earth in km
+        var r = 6378.8;
+
+        // degrees to radians (divide by 57.2958)
+        var ne_lat = bounds.getNorthEast().lat() / 57.2958;
+        var ne_lng = bounds.getNorthEast().lng() / 57.2958;
+        var c_lat = bounds.getCenter().lat() / 57.2958;
+        var c_lng = bounds.getCenter().lng() / 57.2958;
+
+        // distance = circle radius from center to Northeast corner of bounds
+        var r_km = r * Math.acos(
+            Math.sin(c_lat) * Math.sin(ne_lat) +
+            Math.cos(c_lat) * Math.cos(ne_lat) * Math.cos(ne_lng - c_lng)
+        );
+
+        return r_km *1000 // radius in meters
+    };
+
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
 
 }
 
