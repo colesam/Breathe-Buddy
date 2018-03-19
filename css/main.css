@@ -42,7 +42,7 @@ i:hover {
     padding: 15px 30px 15px 30px;
 }
 
-.fixed-card {
+.fixed {
     position: fixed;
         top: 5px;
         left: 5px;

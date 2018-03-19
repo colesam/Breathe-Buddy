@@ -56,19 +56,20 @@ function airQualityControllerFunction($scope, $http) {
     
     $scope.checkFullScreen = function(){
         var mapDivElement = $('#map').children().eq(0);
-        if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth){
+        
+        if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth) {
             if(!$scope.fullscreen){
                 console.log('To Fullscreen');
                 //update to fullscreen
-                $('#input-card').addClass('fixed-card');
+                $('#map-controls').removeClass('d-none').addClass('d-flex');
 
                 $scope.fullscreen = true;
             }
         }
         else{
-            if($scope.fullscreen){
+            if($scope.fullscreen) {
                 //update to non-fullscreen
-                $('#input-card').removeClass('fixed-card');
+                $('#map-controls').removeClass('d-flex').addClass('d-none');
                 console.log('To non-fullscreen');
 
                 $scope.fullscreen = false;
@@ -136,8 +137,9 @@ function airQualityControllerFunction($scope, $http) {
 
     $scope.mapInit = function() {
         //creates a map centered at Minneapolis
-        var latitude  =  44.975;
-        var longitude = -93.265;
+        var latitude    =  44.975;
+        var longitude   = -93.265;
+        var clone;
 
         $scope.map = new google.maps.Map(document.getElementById('map'), {
             zoom: 10,
@@ -146,6 +148,14 @@ function airQualityControllerFunction($scope, $http) {
 
         $scope.geocoder = new google.maps.Geocoder;
         $scope.lat_lng = latitude + ', ' + longitude;
+        
+        //  clone the #to-map row, updated id, and display-none
+        clone = $('#to-map').clone();
+        clone.attr('id', 'map-controls');
+        clone.removeClass('d-flex').addClass('d-none fixed');
+        
+        //  append clone to the inside of the map
+        $('#map div').append(clone);
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
