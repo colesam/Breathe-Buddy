@@ -109,7 +109,7 @@ function airQualityControllerFunction($scope, $http) {
         clone.removeClass('d-flex').addClass('d-none fixed');
         
         //  append clone to the inside of the map
-        $('#map').append(clone);
+        $('#map div').append(clone);
 
         $scope.map.center_changed = $scope.updateLocation;
         $scope.map.bounds_changed = $scope.checkFullScreen;
