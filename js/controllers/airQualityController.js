@@ -47,6 +47,7 @@ function airQualityControllerFunction($scope, $http) {
         var latitude    =  44.975;
         var longitude   = -93.265;
         var clone;
+        var element;
 
         $scope.map = new google.maps.Map(document.getElementById('map'), {
             zoom: 10,
