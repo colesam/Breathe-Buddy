@@ -33,6 +33,7 @@ function airQualityControllerFunction($scope, $http) {
 
     $scope.init = function (){
         $scope.mapInit();
+        $scope.dateInit();
     };
 
 
@@ -280,20 +281,101 @@ function airQualityControllerFunction($scope, $http) {
     /*******************************************   Date Picker   ******************************************************/
     /*************************************************** **************************************************************/
 
-    $scope.populateDatePicker = function() {
+    $scope.dateInit = function() {
         
         var date;
         var today = new Date();
         $scope.dates.push(today); //  push today onto the the date array
         
-        //  fill dates array with all valid dates (today minus 90 days)
-        for(var i = 0; i < 90; i++) {
+        //  fill dates array with all valid dates (last 90 days including today)
+        for(var i = 0; i < 89; i++) {
             
             date = new Date();
-            date.setDate(today.getDate() - 1);
+            date.setDate($scope.dates[i].getDate() - 1);
             $scope.dates.push(date);
             
         }
+
+    }
+    
+    $scope.loadMonth = function(month) {
+        
+        var startIndex;
+        
+        if(typeof(month) === "string" || month instanceof String) {
+            
+            //  convert string to number
+            month = month.toUpperCase();
+            
+            switch(month) {
+                
+                case "JANUARY":
+                    month = 1;
+                    break;
+                    
+                case "FEBRUARY":
+                    month = 2;
+                    break;
+                    
+                case "MARCH":
+                    month = 3;
+                    break;
+                    
+                case "APRIL":
+                    month = 4;
+                    break;
+                    
+                case "MAY":
+                    month = 5;
+                    break;
+                    
+                case "JUNE":
+                    month = 6;
+                    break;
+                    
+                case "JULY":
+                    month = 7;
+                    break;
+                    
+                case "AUGUST":
+                    month = 8;
+                    break;
+                    
+                case "SEPTEMBER":
+                    month = 9;
+                    break;
+                    
+                case "OCTOBER":
+                    month = 10;
+                    break;
+                    
+                case "NOVEMBER":
+                    month = 11;
+                    break;
+                    
+                case "DECEMBER":
+                    month = 12;
+                    break;
+                    
+                default:
+                    console.log("airQualityController.loadMonth(): month parameter did not match actual month.");
+                
+            }
+            
+        } else if(typeof(month) != "number") {
+            
+            console.log("airQualityController.loadMonth(): month parameter must be of type string or number.");
+            
+        }
+        
+        //  find the first date of the month
+        for(var i = 0; i < 90; i++) {
+            
+            if($scope.dates[i].getMonth() === month) { startIndex = i; }
+            
+        }
+        
+        //  special case if it's Sunday (skip first row)
         
     }
 

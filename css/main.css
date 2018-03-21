@@ -64,6 +64,10 @@ i:hover {
     width: 100%;
 }
 
+.form-group {
+    margin-bottom: 30px;
+}
+
 .btn.form-control {
     width: 100%;
     border: 1px solid #77997e;
@@ -85,15 +89,25 @@ i:hover {
     height: 250px;
 }
 
+.map {
+    height: 500px;
+}
+
+.full-size{
+    width: 100%;
+    height: 100%;
+}
+
 
 /* DATE CSS */
+#days-of-week {
+    font-weight: 700;
+}
+
 .month {
     padding-left: 10px;
     padding-right: 10px;
-}
-
-.map {
-    height: 500px;
+    margin-bottom: 5px;
 }
 
 td {
@@ -125,10 +139,7 @@ td:hover {
     cursor: default;
 }
 
-.full-size{
-    width: 100%;
-    height: 100%;
-}
+
 
 /*.full-height {*/
 /*    min-height: 100vh !important;*/
