@@ -7,6 +7,7 @@ function airQualityControllerFunction($scope, $http) {
     $scope.airQualityHome = 'https://api.openaq.org/v1/';
     $scope.measurements = 'measurements';
     $scope.airData = [];
+    $scope.options = ['pm10', 'pm25', 'co3'];
 
     /* Google Maps API Constants */
     $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
@@ -17,6 +18,7 @@ function airQualityControllerFunction($scope, $http) {
     /* User input */
     $scope.location = '';
     $scope.lat_lng = '';
+    $scope.selectedDate = '';
 
 
     /* Map Variables */
@@ -36,6 +38,25 @@ function airQualityControllerFunction($scope, $http) {
         $scope.mapInit();
         $scope.loadWeek(2, 1);
     };
+
+    /*************************************************** **************************************************************/
+    /*******************************************   On Page Clicks*****   **********************************************/
+    /*************************************************** **************************************************************/
+
+    $scope.toggleFilter = function(event){
+        //todo
+    };
+
+
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
+    /*************************************************** **************************************************************/
+
+
+
+
+
+
 
 
 
@@ -119,7 +140,7 @@ function airQualityControllerFunction($scope, $http) {
         //get radius and set max radius at 10,000
         var radius = $scope.getRadius($scope.map.getBounds());
         radius = Math.round(Math.min(radius, 100000));
-        $scope.getAirQuality($scope.populateMarkers, $scope.lat_lng, radius, undefined, '2018-03-18T17:00:00-06:00', '2018-03-18T18:00:00-06:00', 10000);
+        $scope.getAirQuality($scope.populateMarkers, $scope.lat_lng, radius, $scope.options, '2018-03-18T17:00:00-06:00', '2018-03-18T18:00:00-06:00', 10000);
     };
 
     $scope.updateLocation = function(){
@@ -198,8 +219,6 @@ function airQualityControllerFunction($scope, $http) {
         element.css('visibility', 'visible');
         element.css('top', '0');
         element.css('left', '0');
-
-        console.log('In marker popup');
     };
 
     /*
@@ -249,18 +268,21 @@ function airQualityControllerFunction($scope, $http) {
             $scope.placeMarker({lat: $scope.airData[i].coordinates.latitude, lng: $scope.airData[i].coordinates.longitude});
         }
 
+        console.log($scope.airData);
+
         //cluster markers if we should
         $scope.updateClusters();
     };
 
     $scope.addData = function(data){
         var found = false;
+        var dataObj;
 
         //find if there are coordinates already there
         for(var i=0; i<$scope.airData.length; i++){
             if($scope.airData[i].coordinates.latitude === data.coordinates.latitude && $scope.airData[i].coordinates.longitude === data.coordinates.longitude){
                 //add to existing location
-                var dataObj = {
+                dataObj = {
                     unit: data.unit,
                     value: data.value,
                     date: data.date
