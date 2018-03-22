@@ -182,10 +182,20 @@ function airQualityControllerFunction($scope, $http) {
     /*******************************************   Handling Markers   *************************************************/
     /*************************************************** **************************************************************/
 
+    $scope.closeMarkerPopup = function(){
+        var element = $('#marker-popup');
+        element.css('visibility', 'hidden');
+    };
 
-    $scope.markerPopup = function(){
+    $scope.openMarkerPopup = function(){
         // marker lat = this.internalPosition.lat();
         // marker lng = this.internalPosition.lng();
+
+        var element = $('#marker-popup');
+
+        element.css('visibility', 'visible');
+        element.css('top', '0');
+        element.css('left', '0');
 
         console.log('In marker popup');
     };
@@ -202,7 +212,8 @@ function airQualityControllerFunction($scope, $http) {
                 position: coordinates,
                 map: $scope.map
             });
-            marker.addListener('mouseover', $scope.markerPopup);
+            marker.addListener('mouseover', $scope.openMarkerPopup);
+            marker.addListener('mouseout', $scope.closeMarkerPopup);
 
             $scope.markers.push(marker);
         }
@@ -236,7 +247,6 @@ function airQualityControllerFunction($scope, $http) {
             $scope.placeMarker({lat: $scope.airData[i].coordinates.latitude, lng: $scope.airData[i].coordinates.longitude});
         }
 
-
         //cluster markers if we should
         $scope.updateClusters();
     };
@@ -249,13 +259,12 @@ function airQualityControllerFunction($scope, $http) {
             if($scope.airData[i].coordinates.latitude === data.coordinates.latitude && $scope.airData[i].coordinates.longitude === data.coordinates.longitude){
                 //add to existing location
                 var dataObj = {
-                    parameter: data.parameter,
                     unit: data.unit,
                     value: data.value,
                     date: data.date
                 };
 
-                $scope.airData[i].data.push(dataObj);
+                $scope.airData[i][data.parameter] = dataObj;
                 found = true;
             }
         }
@@ -263,15 +272,12 @@ function airQualityControllerFunction($scope, $http) {
         if(!found) {
             //add new location
             var obj = {
-                coordinates: data.coordinates,
-                data: [
-                            {
-                                parameter: data.parameter,
-                                unit: data.unit,
-                                value: data.value,
-                                date: data.date
-                            }
-                        ]
+                coordinates: data.coordinates
+            };
+            obj[data.parameter] = {
+                unit: data.unit,
+                value: data.value,
+                date: data.date
             };
 
             $scope.airData.push(obj);
