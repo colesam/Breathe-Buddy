@@ -22,6 +22,10 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+.roboto-mono {
+    font-family: 'Roboto Mono', monospace;
+}
+
 .title {
     color: white;
     margin: 0;

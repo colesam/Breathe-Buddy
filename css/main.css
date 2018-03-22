@@ -79,22 +79,31 @@ i:hover {
     background: #d9f4c7;
 }
 
+.results {
+    padding: 15px 15px 15px 15px;
+}
+
 .data {
     background: #f9f9f9;
     border: 1px solid #a8a8a8;
-    padding: 5px;
     margin-bottom: 10px;
     overflow-y: scroll;
     width: 100%;
     height: 250px;
 }
 
+.heading {
+    border: 1px solid #a8a8a8;
+}
+
 .data table {
+    table-layout: fixed;
+    text-align: center;
     width: 100%;
 }
 
-.data table th {
-    border-bottom: 1px solid #a8a8a8;
+.data table td {
+    border: 1px solid #a8a8a8;
 }
 
 .map {
