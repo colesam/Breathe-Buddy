@@ -34,7 +34,8 @@ function airQualityControllerFunction($scope, $http) {
 
     $scope.init = function (){
         $scope.mapInit();
-        $scope.loadWeek(2, 1);
+        $scope.dateInit();
+        $scope.loadMonth(new Date().getMonth());
     };
 
 
@@ -392,6 +393,9 @@ function airQualityControllerFunction($scope, $http) {
             $scope.dates.push(date);
             
         }
+        
+        //  reverse dates array to make it more intuitive
+        $scope.dates.reverse();
 
     }
     
@@ -408,51 +412,51 @@ function airQualityControllerFunction($scope, $http) {
             switch(month) {
                 
                 case "JANUARY":
-                    month = 1;
+                    month = 0;
                     break;
                     
                 case "FEBRUARY":
-                    month = 2;
+                    month = 1;
                     break;
                     
                 case "MARCH":
-                    month = 3;
+                    month = 2;
                     break;
                     
                 case "APRIL":
-                    month = 4;
+                    month = 3;
                     break;
                     
                 case "MAY":
-                    month = 5;
+                    month = 4;
                     break;
                     
                 case "JUNE":
-                    month = 6;
+                    month = 5;
                     break;
                     
                 case "JULY":
-                    month = 7;
+                    month = 6;
                     break;
                     
                 case "AUGUST":
-                    month = 8;
+                    month = 7;
                     break;
                     
                 case "SEPTEMBER":
-                    month = 9;
+                    month = 8;
                     break;
                     
                 case "OCTOBER":
-                    month = 10;
+                    month = 9;
                     break;
                     
                 case "NOVEMBER":
-                    month = 11;
+                    month = 10;
                     break;
                     
                 case "DECEMBER":
-                    month = 12;
+                    month = 11;
                     break;
                     
                 default:
@@ -465,25 +469,65 @@ function airQualityControllerFunction($scope, $http) {
             console.log("airQualityController.loadMonth(): month parameter must be of type string or number.");
             
         }
-        
+
         //  find the first date of the month
         for(var i = 0; i < 90; i++) {
-            
+
             if($scope.dates[i].getMonth() === month) { startIndex = i; }
             
         }
+        console.log(startIndex);
+        //  find the first Sunday, even if it's in the previous month
+        while($scope.dates[startIndex].getDay() != 0) {
+            
+            startIndex--;
+            
+        }
         
-        //  special case if it's Sunday (skip first row)
+        console.log($scope.dates);
+        $scope.loadWeek(month, 1, startIndex);
+        //$scope.loadWeek(month, 2, startIndex + 7);
+        //$scope.loadWeek(month, 3, startIndex + 14);
+        //.loadWeek(month, 4, startIndex + 21);
+        //$scope.loadWeek(month, 5, startIndex + 28);
+            
         
     }
     
-    $scope.loadWeek = function(week, index) {
+    $scope.loadWeek = function(month, week, index) {
         
         //  error check
         if(week < 1 || week > 5) { console.log("airQualityController.loadWeek(): week parameter must be between 1 and 5 (including 1 and 5).") }
         
-        var days = $('#week' + week + " td");
-        console.log(days);
+        console.log('LOAD WEEK DEBUG ----------------');
+        console.log('month: ' + month);
+        console.log('week: ' + week);
+        console.log('index: ' + index);
+        
+        var week = $('#week' + week);
+        var days = week.children('td');
+        
+        days.each(function(index) {
+
+            if(index >= 0 && index < 90) { 
+                
+                console.log($scope.dates[index].getDate());
+                $(this).html = $scope.dates[index].getDate();
+                
+                //  if day is not in the current month, give it gray styling
+                if($scope.dates[index].getMonth != month) { $(this).addClass('gray-date'); }
+                
+            } else {
+                
+                //  day is outside the 90 day range and is therefore unavailable
+                $(this).html('00');
+                $(this).addClass('unavailable');
+                
+            }
+            
+            index++;
+            
+        });
         
     }
 

@@ -89,6 +89,14 @@ i:hover {
     height: 250px;
 }
 
+.data table {
+    width: 100%;
+}
+
+.data table th {
+    border-bottom: 1px solid #a8a8a8;
+}
+
 .map {
     height: 500px;
 }
