@@ -33,7 +33,7 @@ function airQualityControllerFunction($scope, $http) {
 
     $scope.init = function (){
         $scope.mapInit();
-        $scope.dateInit();
+        $scope.loadWeek(2, 1);
     };
 
 
@@ -59,19 +59,6 @@ function airQualityControllerFunction($scope, $http) {
 
         $scope.geocoder = new google.maps.Geocoder;
         $scope.lat_lng = latitude + ', ' + longitude;
-        
-        //  clone the #to-map row, updated id, and display-none
-        clone = $('#to-map').clone();
-        clone.attr('id', 'map-controls');
-        clone.removeClass('d-flex').addClass('d-none');
-        
-        //  wrap the clone in a container div
-        element = $('<div></div>');
-        element.addClass('container');
-        element.append(clone);
-        
-        //  append clone to the inside of the map
-        $('#map div').append(element);
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
@@ -302,6 +289,7 @@ function airQualityControllerFunction($scope, $http) {
         
         var startIndex;
         
+        //  error check
         if(typeof(month) === "string" || month instanceof String) {
             
             //  convert string to number
@@ -376,6 +364,16 @@ function airQualityControllerFunction($scope, $http) {
         }
         
         //  special case if it's Sunday (skip first row)
+        
+    }
+    
+    $scope.loadWeek = function(week, index) {
+        
+        //  error check
+        if(week < 1 || week > 5) { console.log("airQualityController.loadWeek(): week parameter must be between 1 and 5 (including 1 and 5).") }
+        
+        var days = $('#week' + week + " td");
+        console.log(days);
         
     }
 
