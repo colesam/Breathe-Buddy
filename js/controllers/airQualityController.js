@@ -66,13 +66,16 @@ function airQualityControllerFunction($scope, $http) {
         $scope.map.bounds_changed = $scope.checkFullScreen;
     };
 
-    $scope.getGeoCode = function(address, successCallback, failureCallback){
-        $scope.geocoder.geocode( { 'address': address}, function(result, status) {
+    $scope.getGeoCode = function(reqType, value, successCallback, failureCallback){
+        var obj = {};
+        obj[reqType] = value;
+
+        $scope.geocoder.geocode( obj, function(result, status) {
             if(status === 'OK' && result !== undefined && result.length > 0){
                 successCallback(result);
             }
             else{
-                failureCallback(address);
+                failureCallback(value);
             }
         });
     };
@@ -119,11 +122,37 @@ function airQualityControllerFunction($scope, $http) {
     $scope.updateLocation = function(){
         $scope.loading = false;
         $scope.lat_lng = (Math.round($scope.map.center.lat() * 1000) / 1000) + ', ' + (Math.round($scope.map.center.lng() * 1000) / 1000);
+        var locArr = $scope.lat_lng.split(', ');
+        var locObj = {lat: Number(locArr[0]), lng: Number(locArr[1])};
+
+        $scope.getGeoCode('location', locObj, function(adr){
+            var target = 0;
+            var i;
+            var j;
+            var found = false;
+
+            for(i=0; !found && i<adr.length; i++){
+                for (j=0; !found && j < adr[i].types.length; j++) {
+                    if (adr[i].types[j] === 'locality') {
+                        target = i;
+                        found = true;
+                    }
+                }
+            }
+
+            $scope.$apply(function () {
+                $scope.location = adr[target].formatted_address;
+            });
+
+        }, function(location){
+            console.log('Unable to find adequate address from location: ' + location);
+        });
     };
+
 
     $scope.submitLocation = function(event){
         if(event.keyCode === 13 && $scope[event.currentTarget.name].length > 0) {
-            $scope.getGeoCode($scope[event.currentTarget.name], function (result) {
+            $scope.getGeoCode('address', $scope[event.currentTarget.name], function (result) {
                 $scope.map.setCenter({
                     lat: result[0].geometry.location.lat(),
                     lng: result[0].geometry.location.lng()
