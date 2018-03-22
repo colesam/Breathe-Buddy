@@ -62,6 +62,9 @@ function airQualityControllerFunction($scope, $http) {
         $scope.lat_lng = latitude + ', ' + longitude;
 
         //  Sam: insert .container div into #map > div with class .in-map to fix styling on fullscreen map controls
+        element = $('<div></div>');
+        element.addClass('container in-map');
+        $('#map > div').append(element);
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
@@ -87,11 +90,10 @@ function airQualityControllerFunction($scope, $http) {
         if(mapDivElement.height() >= window.innerHeight && mapDivElement.width() >= window.innerWidth) {
             
             if(!$scope.fullscreen) {
-                console.log("test");
+
                 //  move map controls to full screen map
                 var element = $('#map-controls');
-                element.addClass('in-map');
-                $('#map > div').prepend(element);
+                $('.in-map').prepend(element);
     
                 $scope.fullscreen = true;
             }
