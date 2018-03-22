@@ -60,6 +60,8 @@ function airQualityControllerFunction($scope, $http) {
         $scope.geocoder = new google.maps.Geocoder;
         $scope.lat_lng = latitude + ', ' + longitude;
 
+        //  Sam: insert .container div into #map > div with class .in-map to fix styling on fullscreen map controls
+
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
     };
