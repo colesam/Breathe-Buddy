@@ -6,6 +6,7 @@ function airQualityControllerFunction($scope, $http) {
     /* Air Quality API Constants */
     $scope.airQualityHome = 'https://api.openaq.org/v1/';
     $scope.measurements = 'measurements';
+    $scope.airData = [];
 
     /* Google Maps API Constants */
     $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
@@ -116,7 +117,7 @@ function airQualityControllerFunction($scope, $http) {
         //get radius and set max radius at 10,000
         var radius = $scope.getRadius($scope.map.getBounds());
         radius = Math.round(Math.min(radius, 100000));
-        $scope.getAirQuality($scope.populateMarkers, $scope.lat_lng, radius , undefined, '2018-3-18', '2018-3-19', 10000);
+        $scope.getAirQuality($scope.populateMarkers, $scope.lat_lng, radius, undefined, '2018-03-18T17:00:00-06:00', '2018-03-18T18:00:00-06:00', 10000);
     };
 
     $scope.updateLocation = function(){
@@ -127,12 +128,10 @@ function airQualityControllerFunction($scope, $http) {
 
         $scope.getGeoCode('location', locObj, function(adr){
             var target = 0;
-            var i;
-            var j;
             var found = false;
 
-            for(i=0; !found && i<adr.length; i++){
-                for (j=0; !found && j < adr[i].types.length; j++) {
+            for(var i=0; !found && i<adr.length; i++){
+                for (var j=0; !found && j < adr[i].types.length; j++) {
                     if (adr[i].types[j] === 'locality') {
                         target = i;
                         found = true;
@@ -157,6 +156,8 @@ function airQualityControllerFunction($scope, $http) {
                     lat: result[0].geometry.location.lat(),
                     lng: result[0].geometry.location.lng()
                 });
+
+                $scope.map.setZoom(10);
             }, function (address) {
                 alert('Unable to find location: ' + address);
             });
@@ -182,16 +183,28 @@ function airQualityControllerFunction($scope, $http) {
     /*************************************************** **************************************************************/
 
 
+    $scope.markerPopup = function(){
+        // marker lat = this.internalPosition.lat();
+        // marker lng = this.internalPosition.lng();
+
+        console.log('In marker popup');
+    };
+
     /*
         Places a maker at specified lat and lng
         coordinates = {lat: ####, lng: ####};
      */
     $scope.placeMarker = function(coordinates){
+        var marker;
+
         if(coordinates.lng !== undefined && coordinates.lat !== undefined) {
-            $scope.markers.push(new google.maps.Marker({
+            marker = new google.maps.Marker({
                 position: coordinates,
                 map: $scope.map
-            }));
+            });
+            marker.addListener('mouseover', $scope.markerPopup);
+
+            $scope.markers.push(marker);
         }
     };
 
@@ -201,19 +214,68 @@ function airQualityControllerFunction($scope, $http) {
     };
 
     $scope.populateMarkers = function(data){
-        //clear old markers
-        $scope.markers = [];
+        var i;
 
-        for(var i=0; i<data.length; i++){
+        //clear old data
+        $scope.airData = [];
+
+        //add new data
+        for(i=0; i<data.length; i++){
             if(data[i] !== undefined){
                 if(data[i].coordinates !== undefined){
-                    $scope.placeMarker({lat: data[i].coordinates.latitude, lng: data[i].coordinates.longitude});
+                    $scope.addData(data[i]);
                 }
             }
         }
 
-        $scope.updateClusters();
+        //clear old markers
+        $scope.markers = [];
 
+        //add new markers
+        for(i=0; i<$scope.airData.length; i++) {
+            $scope.placeMarker({lat: $scope.airData[i].coordinates.latitude, lng: $scope.airData[i].coordinates.longitude});
+        }
+
+
+        //cluster markers if we should
+        $scope.updateClusters();
+    };
+
+    $scope.addData = function(data){
+        var found = false;
+
+        //find if there are coordinates already there
+        for(var i=0; i<$scope.airData.length; i++){
+            if($scope.airData[i].coordinates.latitude === data.coordinates.latitude && $scope.airData[i].coordinates.longitude === data.coordinates.longitude){
+                //add to existing location
+                var dataObj = {
+                    parameter: data.parameter,
+                    unit: data.unit,
+                    value: data.value,
+                    date: data.date
+                };
+
+                $scope.airData[i].data.push(dataObj);
+                found = true;
+            }
+        }
+
+        if(!found) {
+            //add new location
+            var obj = {
+                coordinates: data.coordinates,
+                data: [
+                            {
+                                parameter: data.parameter,
+                                unit: data.unit,
+                                value: data.value,
+                                date: data.date
+                            }
+                        ]
+            };
+
+            $scope.airData.push(obj);
+        }
     };
 
     /*************************************************** **************************************************************/
