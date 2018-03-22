@@ -78,23 +78,32 @@ function airQualityControllerFunction($scope, $http) {
     $scope.checkFullScreen = function(){
         var mapDivElement = $('#map').children().eq(0);
 
-        if(mapDivElement.height() === window.innerHeight && mapDivElement.width() === window.innerWidth) {
-            if(!$scope.fullscreen){
-                console.log('To Fullscreen');
-                //update to fullscreen
-                $('#map-controls').removeClass('d-none').addClass('d-flex');
-
+        if(mapDivElement.height() >= window.innerHeight && mapDivElement.width() >= window.innerWidth) {
+            
+            if(!$scope.fullscreen) {
+                console.log("test");
+                //  move map controls to full screen map
+                var element = $('#map-controls');
+                element.addClass('in-map');
+                $('#map > div').prepend(element);
+    
                 $scope.fullscreen = true;
             }
+                
         }
-        else{
+        else {
+            
             if($scope.fullscreen) {
-                //update to non-fullscreen
-                $('#map-controls').removeClass('d-flex').addClass('d-none');
-                console.log('To non-fullscreen');
+                
+                //  move map controls back to original place on DOM
+                var element = $('#map-controls');
+                element.removeClass('.in-map');
+                $('div[ng-controller="airQualityCtrl"]').prepend(element);
 
                 $scope.fullscreen = false;
+                
             }
+            
         }
     };
 

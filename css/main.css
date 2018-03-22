@@ -42,7 +42,7 @@ i:hover {
     padding: 15px 30px 15px 30px;
 }
 
-#map-controls {
+.in-map {
     position: relative;
     z-index: 1;
 }
