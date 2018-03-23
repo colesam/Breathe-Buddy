@@ -37,8 +37,8 @@ function airQualityControllerFunction($scope, $http) {
     $scope.init = function (){
         $scope.mapInit();
         $scope.dateInit();
-        $scope.loadMonth(new Date().getMonth());
         
+        //  code for pinning table head to top of table
         var $table = $('.data table');
         $table.floatThead({
             scrollContainer: function($table){
@@ -411,20 +411,24 @@ function airQualityControllerFunction($scope, $http) {
     $scope.dateInit = function() {
         
         var date;
-        var today = new Date();
-        $scope.dates.push(today); //  push today onto the the date array
+        var day = new Date().getDate();
         
         //  fill dates array with all valid dates (last 90 days including today)
-        for(var i = 0; i < 89; i++) {
+        for(var i = 0; i < 90; i++) {
             
             date = new Date();
-            date.setDate($scope.dates[i].getDate() - 1);
+            date.setDate(day - i);
+            date.isSelected = false;
             $scope.dates.push(date);
             
         }
         
         //  reverse dates array to make it more intuitive
         $scope.dates.reverse();
+        
+        //  load the month of today, set today to active
+        $scope.dates[89].isSelected = true;
+        $scope.loadMonth($scope.dates[89].getMonth());
 
     }
     
@@ -433,92 +437,29 @@ function airQualityControllerFunction($scope, $http) {
         var startIndex;
         
         //  error check
-        if(typeof(month) === "string" || month instanceof String) {
-            
-            //  convert string to number
-            month = month.toUpperCase();
-            
-            switch(month) {
-                
-                case "JANUARY":
-                    month = 0;
-                    break;
-                    
-                case "FEBRUARY":
-                    month = 1;
-                    break;
-                    
-                case "MARCH":
-                    month = 2;
-                    break;
-                    
-                case "APRIL":
-                    month = 3;
-                    break;
-                    
-                case "MAY":
-                    month = 4;
-                    break;
-                    
-                case "JUNE":
-                    month = 5;
-                    break;
-                    
-                case "JULY":
-                    month = 6;
-                    break;
-                    
-                case "AUGUST":
-                    month = 7;
-                    break;
-                    
-                case "SEPTEMBER":
-                    month = 8;
-                    break;
-                    
-                case "OCTOBER":
-                    month = 9;
-                    break;
-                    
-                case "NOVEMBER":
-                    month = 10;
-                    break;
-                    
-                case "DECEMBER":
-                    month = 11;
-                    break;
-                    
-                default:
-                    console.log("airQualityController.loadMonth(): month parameter did not match actual month.");
-                
-            }
-            
-        } else if(typeof(month) != "number") {
-            
-            console.log("airQualityController.loadMonth(): month parameter must be of type string or number.");
-            
-        }
+        if(typeof(month) != 'number') { console.log('airQualityController.loadMonth(): parameter month must be a number, was typeof: ' + typeof(month)); }
+        if(month < 0 || month > 11) { console.log('airQualityController.loadMonth(): parameter month must range from 0 to 11, value was: ' + month ); }
 
         //  find the first date of the month
-        for(var i = 0; i < 90; i++) {
+        var notFound = true;
+        for(var i = 0; i < 90 && notFound; i++) {
 
-            if($scope.dates[i].getMonth() === month) { startIndex = i; }
+            if($scope.dates[i].getMonth() === month) { 
+                startIndex = i; 
+                notFound = false;
+            }
             
         }
-        console.log(startIndex);
-        //  find the first Sunday, even if it's in the previous month
-        while($scope.dates[startIndex].getDay() != 0) {
-            
-            startIndex--;
-            
-        }
+
+        //  find the index of the first Sunday, even if it's in the previous month
+        while($scope.dates[startIndex].getDay() != 0) { startIndex--; }
         
-        console.log($scope.dates);
+        //  load correct dates into each of the five rows of the calendar
         $scope.loadWeek(month, 1, startIndex);
-        //$scope.loadWeek(month, 2, startIndex + 7);
-        //$scope.loadWeek(month, 3, startIndex + 14);
-        //.loadWeek(month, 4, startIndex + 21);
-        //$scope.loadWeek(month, 5, startIndex + 28);
+        $scope.loadWeek(month, 2, startIndex + 7);
+        $scope.loadWeek(month, 3, startIndex + 14);
+        $scope.loadWeek(month, 4, startIndex + 21);
+        $scope.loadWeek(month, 5, startIndex + 28);
             
         
     }
@@ -527,24 +468,35 @@ function airQualityControllerFunction($scope, $http) {
         
         //  error check
         if(week < 1 || week > 5) { console.log("airQualityController.loadWeek(): week parameter must be between 1 and 5 (including 1 and 5).") }
-        
-        console.log('LOAD WEEK DEBUG ----------------');
-        console.log('month: ' + month);
-        console.log('week: ' + week);
-        console.log('index: ' + index);
+        if(typeof(month) != 'number') { console.log('airQualityController.loadMonth(): parameter month must be a number, was typeof: ' + typeof(month)); }
+        if(month < 0 || month > 11) { console.log('airQualityController.loadMonth(): parameter month must range from 0 to 11, value was: ' + month ); }
         
         var week = $('#week' + week);
         var days = week.children('td');
         
-        days.each(function(index) {
+        days.each(function(i) {
+            
+            console.log($(this));
+            $(this).removeClass();
 
             if(index >= 0 && index < 90) { 
+
+                $(this).html($scope.dates[index].getDate());
                 
-                console.log($scope.dates[index].getDate());
-                $(this).html = $scope.dates[index].getDate();
+                //  if it's selected give it the selected class (used for initialization)
+                if($scope.dates[index].isSelected) { 
+                    $(this).addClass('selected'); 
+                    $scope.dates[index].isSelected = false;
+                }
                 
                 //  if day is not in the current month, give it gray styling
-                if($scope.dates[index].getMonth != month) { $(this).addClass('gray-date'); }
+                if($scope.dates[index].getMonth() != month) { $(this).addClass('gray-date'); }
+                
+                $(this).click(function() {
+                    
+                    
+                    
+                });
                 
             } else {
                 

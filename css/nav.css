@@ -1,6 +1,6 @@
 /* NAVIGATION CLASSES */
 nav {
-    background: #073c00;
+    background: #054754;
     height: 60px;
     padding-left: 50px;
     padding-right: 50px;
@@ -21,11 +21,11 @@ nav a {
 }
 
 .nav-link:hover {
-    color: #72e200;
+    color: #53f4ff;
 }
 
 .active {
-    color: #72e200;
+    color: #53f4ff;
     font-weight: 700;
 }
 
