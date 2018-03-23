@@ -1,11 +1,11 @@
 /*  COLORS
     
-    DARK GREEN     #77997e
-    GREEN          #d9f4c7
-    BLUE           #a1edd5
+    DARK GREEN     #073c00
+    GREEN          #d9f4c7    
+    NEON GREEN     #72e200
+    BLUE           #72e200
     GRAY           #a8a8a8
     LIGHT GRAY     #f9f9f9
-
 */
 
 body {
@@ -16,7 +16,7 @@ body {
 
 i:hover {
     cursor: pointer;
-    color: #a1edd5;
+    color: #72e200;
 }
 
 .transitions {
@@ -31,7 +31,7 @@ i:hover {
 }
 
 .card-title {
-    background: #77997e;
+    background: #073c00;
     padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -60,7 +60,7 @@ i:hover {
 
 .form-control:focus {
     box-shadow: none;
-    border-bottom: 2px solid #a1edd5;
+    border-bottom: 2px solid #72e200;
     width: 100%;
 }
 
@@ -141,7 +141,7 @@ td {
 }
 
 td:hover {
-    color: #a1edd5;
+    color: #72e200;
     cursor: pointer;
     font-weight: 700;
 }
@@ -151,7 +151,7 @@ td:hover {
 }
 
 .selected {
-    border-bottom: 2px solid #a1edd5;
+    border-bottom: 2px solid #72e200;
     font-weight: 700;
 }
 
