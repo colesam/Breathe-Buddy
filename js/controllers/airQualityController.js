@@ -38,6 +38,13 @@ function airQualityControllerFunction($scope, $http) {
         $scope.mapInit();
         $scope.dateInit();
         $scope.loadMonth(new Date().getMonth());
+        
+        var $table = $('.data table');
+        $table.floatThead({
+            scrollContainer: function($table){
+                return $table.closest('.data');
+            }
+        });
     };
 
     /*************************************************** **************************************************************/
