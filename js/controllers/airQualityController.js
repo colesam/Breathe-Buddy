@@ -4,35 +4,40 @@
 function airQualityControllerFunction($scope, $http) {
 
     /* Air Quality API Constants */
-    $scope.airQualityHome = 'https://api.openaq.org/v1/';
-    $scope.measurements = 'measurements';
-    $scope.airData = [];
-    $scope.options = ['pm10', 'pm25', 'co3'];
+        $scope.airQualityHome = 'https://api.openaq.org/v1/';
+        $scope.measurements = 'measurements';
+        $scope.airData = [];
+        $scope.options = ['pm25', 'pm10', 'so2', 'no2', 'o3', 'co', 'bc'];
 
     /* Google Maps API Constants */
-    $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
-    $scope.API_LOC = 'https://www.google.com/maps/embed/v1/place';
-    $scope.API_START = $scope.API_LOC + '?key=' + $scope.API_KEY + '&q=';
-    $scope.MARKER_CLUSTER_OBJ = {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'};
+        $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
+        $scope.API_LOC = 'https://www.google.com/maps/embed/v1/place';
+        $scope.API_START = $scope.API_LOC + '?key=' + $scope.API_KEY + '&q=';
+        $scope.MARKER_CLUSTER_OBJ = {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'};
 
     /* User input */
-    $scope.location = '';
-    $scope.lat_lng = '';
-    $scope.selectedDate = '';
-
+        $scope.location = '';
+        $scope.lat_lng = '';
+        $scope.selectedDate = '';
 
     /* Map Variables */
-    $scope.map = null;
-    $scope.markers = [];
-    $scope.geocoder = null;
-    $scope.fullscreen = false;
-    $scope.markerCluterManager = null;
-    $scope.loading = false;
-    
-    
+        $scope.map = null;
+        $scope.markers = [];
+        $scope.heatmap = null;
+        $scope.geocoder = null;
+        $scope.fullscreen = false;
+        $scope.markerCluterManager = null;
+        $scope.loading = false;
+
     /* Date Picker Variables */
-    $scope.datePicker   = $('#date-picker table');
-    $scope.dates        = [];
+        $scope.datePicker   = $('#date-picker table');
+        $scope.dates        = [];
+
+
+
+
+
+
 
     $scope.init = function (){
         $scope.mapInit();
@@ -46,6 +51,14 @@ function airQualityControllerFunction($scope, $http) {
             }
         });
     };
+
+
+
+
+
+
+
+
 
     /*************************************************** **************************************************************/
     /*******************************************   On Page Clicks*****   **********************************************/
@@ -239,7 +252,8 @@ function airQualityControllerFunction($scope, $http) {
         if(coordinates.lng !== undefined && coordinates.lat !== undefined) {
             marker = new google.maps.Marker({
                 position: coordinates,
-                map: $scope.map
+                map: $scope.map,
+                icon: 'images/arrow.png'
             });
             marker.addListener('mouseover', $scope.openMarkerPopup);
             marker.addListener('mouseout', $scope.closeMarkerPopup);
@@ -251,6 +265,65 @@ function airQualityControllerFunction($scope, $http) {
     $scope.updateClusters = function(){
         $scope.markerCluterManager = new MarkerClusterer($scope.map, $scope.markers, $scope.MARKER_CLUSTER_OBJ);
         $scope.updateLocation();
+        //$scope.updateHeatMap();
+        $scope.updateTable();
+    };
+
+
+    $scope.updateTable = function(){
+        var table = $('#air-data-table');
+        var html = '';
+
+        var id;
+        var pm25;
+        var pm10;
+        var so2;
+        var no2;
+        var o3;
+        var co;
+        var bc;
+
+        for(var i=0; i<$scope.airData.length; i++){
+            id = i + 1;
+
+            pm25 = $scope.airData[i].pm25 !== undefined ? $scope.airData[i].pm25.value : 'X';
+            pm10 = $scope.airData[i].pm10 !== undefined ? $scope.airData[i].pm10.value : 'X';
+            so2  = $scope.airData[i].so2  !== undefined ? $scope.airData[i].so2.value  : 'X';
+            no2  = $scope.airData[i].no2  !== undefined ? $scope.airData[i].no2.value  : 'X';
+            o3   = $scope.airData[i].o3   !== undefined ? $scope.airData[i].o3.value   : 'X';
+            co   = $scope.airData[i].co   !== undefined ? $scope.airData[i].co.value   : 'X';
+            bc   = $scope.airData[i].bc   !== undefined ? $scope.airData[i].bc.value   : 'X';
+
+            html +=     '<tr>' +
+                            '<td class="text-sm">' + id + '</td>' +
+                            '<td class="text-sm">' + pm25 + '</td>' +
+                            '<td class="text-sm">' + pm10 + '</td>' +
+                            '<td class="text-sm">' + so2 + '</td>' +
+                            '<td class="text-sm">' + no2 + '</td>' +
+                            '<td class="text-sm">' + o3 + '</td>' +
+                            '<td class="text-sm">' + co + '</td>' +
+                            '<td class="text-sm">' + bc + '</td>' +
+                        '</tr>';
+        }
+
+        table.html(html);
+
+
+    };
+
+    $scope.updateHeatMap = function(){
+        var heatMapData = [];
+
+        for(var i=0; i<$scope.airData.length; i++){
+            heatMapData.push({location: new google.maps.LatLng($scope.airData[i].coordinates.latitude, $scope.airData[i].coordinates.longitude), weight: Math.pow($scope.airData[i].pm25.value, 5)});
+        }
+
+        $scope.heatmap = new google.maps.visualization.HeatmapLayer({
+            data: heatMapData,
+            map: $scope.map
+        });
+
+        $scope.heatmap.set('radius', 50);
     };
 
     $scope.populateMarkers = function(data){
@@ -275,8 +348,6 @@ function airQualityControllerFunction($scope, $http) {
         for(i=0; i<$scope.airData.length; i++) {
             $scope.placeMarker({lat: $scope.airData[i].coordinates.latitude, lng: $scope.airData[i].coordinates.longitude});
         }
-
-        console.log($scope.airData);
 
         //cluster markers if we should
         $scope.updateClusters();
