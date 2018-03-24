@@ -311,8 +311,6 @@ function airQualityControllerFunction($scope, $http) {
         }
 
         table.html(html);
-
-
     };
 
     $scope.setCurrentHover = function(){
