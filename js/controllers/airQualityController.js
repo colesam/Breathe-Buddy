@@ -33,6 +33,8 @@ function airQualityControllerFunction($scope, $http) {
         $scope.datePicker   = $('#date-picker table');
         $scope.dates        = [];
 
+    /* Other Data */
+        $scope.currentRowHover = null;
 
 
 
@@ -50,6 +52,8 @@ function airQualityControllerFunction($scope, $http) {
                 return $table.closest('.data');
             }
         });
+
+        $scope.$watch('currentRowHover', $scope.setCurrentHover);
     };
 
 
@@ -294,21 +298,44 @@ function airQualityControllerFunction($scope, $http) {
             co   = $scope.airData[i].co   !== undefined ? $scope.airData[i].co.value   : 'X';
             bc   = $scope.airData[i].bc   !== undefined ? $scope.airData[i].bc.value   : 'X';
 
-            html +=     '<tr>' +
-                            '<td class="text-sm">' + id + '</td>' +
-                            '<td class="text-sm">' + pm25 + '</td>' +
-                            '<td class="text-sm">' + pm10 + '</td>' +
-                            '<td class="text-sm">' + so2 + '</td>' +
-                            '<td class="text-sm">' + no2 + '</td>' +
-                            '<td class="text-sm">' + o3 + '</td>' +
-                            '<td class="text-sm">' + co + '</td>' +
-                            '<td class="text-sm">' + bc + '</td>' +
+            html +=     '<tr id="table-row-' + id + '">' +
+                            '<td id="data-id-'   + id + '" class="text-sm">' + id + '</td>' +
+                            '<td id="data-pm25-' + id + '" class="text-sm">' + pm25 + '</td>' +
+                            '<td id="data-pm10-' + id + '" class="text-sm">' + pm10 + '</td>' +
+                            '<td id="data-so2-'  + id + '" class="text-sm">' + so2 + '</td>' +
+                            '<td id="data-no2-'  + id + '" class="text-sm">' + no2 + '</td>' +
+                            '<td id="data-o3-'   + id + '" class="text-sm">' + o3 + '</td>' +
+                            '<td id="data-co-'   + id + '" class="text-sm">' + co + '</td>' +
+                            '<td id="data-bc-'   + id + '" class="text-sm">' + bc + '</td>' +
                         '</tr>';
         }
 
         table.html(html);
 
 
+    };
+
+    $scope.setCurrentHover = function(){
+        if($scope.currentRowHover !== null){
+            $scope.currentRowHover.setIcon('images/selected-arrow.png');
+        }
+    };
+
+    $scope.mouseOverTable = function(event){
+        var id = Number(event.target.id.split('-')[2]) - 1;
+
+        if(!isNaN(id)) {
+            if($scope.currentRowHover !== null) {
+                $scope.currentRowHover.setIcon('images/arrow.png');
+            }
+            $scope.currentRowHover = $scope.markers[Number(event.target.id.split('-')[2]) - 1];
+        }
+    };
+    $scope.mouseOutTable = function(){
+        if($scope.currentRowHover !== null) {
+            $scope.currentRowHover.setIcon('images/arrow.png');
+        }
+        $scope.currentRowHover = null;
     };
 
     $scope.updateHeatMap = function(){
