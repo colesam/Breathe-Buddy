@@ -106,8 +106,8 @@ function airQualityControllerFunction($scope, $http) {
 
         $scope.geocoder = new google.maps.Geocoder;
         $scope.lat_lng = latitude + ', ' + longitude;
-
-        //  Sam: insert .container div into #map > div with class .in-map to fix styling on fullscreen map controls
+        
+        //  create container div for the map controls inside fullscreen map
         element = $('<div></div>');
         element.addClass('container in-map');
         $('#map > div').append(element);
@@ -507,7 +507,10 @@ function airQualityControllerFunction($scope, $http) {
     $scope.dateInit = function() {
         
         var date;
+        var button;
         var day = new Date().getDate();
+        var months = [];
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         
         //  fill dates array with all valid dates (last 90 days including today)
         for(var i = 0; i < 90; i++) {
@@ -521,6 +524,26 @@ function airQualityControllerFunction($scope, $http) {
         
         //  reverse dates array to make it more intuitive
         $scope.dates.reverse();
+        
+        //  create button for each month in last 90 days
+        $scope.dates.forEach((date) => {
+            
+            if(!months.includes(date.getMonth())) {
+            
+                //   push month on to array
+                months.push(date.getMonth());
+                
+                //   create button for month
+                button = $('<button></button>');
+                button.addClass('btn btn-custom');
+                button.html(monthNames[date.getMonth()]);
+                
+                //  if it is the current month, add selected class
+                if(new Date().getMonth() === date.getMonth()) { button.addClass('selected'); }
+            
+            }
+            
+        });
         
         //  load the month of today, set today to active
         $scope.dates[89].isSelected = true;
@@ -581,16 +604,16 @@ function airQualityControllerFunction($scope, $http) {
                 
                 //  if it's selected give it the selected class (used for initialization)
                 if($scope.dates[index].isSelected) { 
+                    
                     $(this).addClass('selected'); 
                     $scope.dates[index].isSelected = false;
+                    
                 }
                 
                 //  if day is not in the current month, give it gray styling
                 if($scope.dates[index].getMonth() != month) { $(this).addClass('gray-date'); }
                 
                 $(this).click(function() {
-                    
-                    
                     
                 });
                 

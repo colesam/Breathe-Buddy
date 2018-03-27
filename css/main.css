@@ -1,14 +1,14 @@
 /*  COLORS
     
     DARK BLUE      #054754
-    GREEN          #e8ffeb    
+    GREEN          #fff9e0    
     NEON GREEN     #53f4ff
     GRAY           #a8a8a8
     LIGHT GRAY     #f9f9f9
 */
 
 body {
-    background: #e8ffeb;
+    background: #fff9e0;
     min-height: 100vh;
     max-width: 100vw;
 }
@@ -67,17 +67,6 @@ i:hover {
     margin-bottom: 30px;
 }
 
-.btn.form-control {
-    width: 100%;
-    border: 1px solid #77997e;
-}
-
-.btn-custom {
-    color: black;
-    margin-top: 25px;
-    background: #e8ffeb;
-}
-
 .results {
     padding: 15px 15px 15px 15px;
 }
@@ -97,6 +86,7 @@ i:hover {
     border-top: none;
     border-left: none;
     background: #f9f9f9;
+    text-transform: uppercase;
 }
 
 th {
@@ -134,14 +124,14 @@ th {
     height: 100%;
 }
 
-.month h3 {
+.btn-custom {
     text-align: center;
     background: #054754;
     color: white;
     padding: 5px;
 }
 
-.month h3:hover {
+.btn-custom:hover {
     color: #53f4ff;
     cursor: pointer;
 }
@@ -166,6 +156,10 @@ td {
     background: #054754;
     border-radius: 50px;
     font-weight: bold;
+}
+
+.btn-custom.selected {
+    border-radius: 0.25rem;
 }
 
 .unavailable {
