@@ -537,6 +537,14 @@ function airQualityControllerFunction($scope, $http) {
                 button = $('<button></button>');
                 button.addClass('btn btn-custom');
                 button.html(monthNames[date.getMonth()]);
+                button.click(function() { 
+                    $scope.loadMonth(date.getMonth());
+                    $('.month .selected').removeClass('selected');
+                    $(this).addClass('selected');
+                });
+                
+                //  append to page
+                $('.month').prepend(button);
                 
                 //  if it is the current month, add selected class
                 if(new Date().getMonth() === date.getMonth()) { button.addClass('selected'); }
@@ -564,14 +572,16 @@ function airQualityControllerFunction($scope, $http) {
         for(var i = 0; i < 90 && notFound; i++) {
 
             if($scope.dates[i].getMonth() === month) { 
+                
                 startIndex = i; 
                 notFound = false;
+                
             }
             
         }
 
         //  find the index of the first Sunday, even if it's in the previous month
-        while($scope.dates[startIndex].getDay() != 0) { startIndex--; }
+        while(startIndex >= 0 && $scope.dates[startIndex].getDay() != 0) { startIndex--; }
         
         //  load correct dates into each of the five rows of the calendar
         $scope.loadWeek(month, 1, startIndex);
