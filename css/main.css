@@ -136,6 +136,10 @@ th {
     cursor: pointer;
 }
 
+.btn-custom:focus {
+    box-shadow: none;
+}
+
 td {
     padding: 2px 5px 2px 5px;
     transition: all 0.2s;

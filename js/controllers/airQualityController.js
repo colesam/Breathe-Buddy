@@ -538,9 +538,12 @@ function airQualityControllerFunction($scope, $http) {
                 button.addClass('btn btn-custom');
                 button.html(monthNames[date.getMonth()]);
                 button.click(function() { 
+                    
+                    //  when the button is clicked load the month
                     $scope.loadMonth(date.getMonth());
                     $('.month .selected').removeClass('selected');
                     $(this).addClass('selected');
+                    
                 });
                 
                 //  append to page
@@ -554,7 +557,7 @@ function airQualityControllerFunction($scope, $http) {
         });
         
         //  load the month of today, set today to active
-        $scope.dates[89].isSelected = true;
+        $scope.selectedDate = $scope.dateToStr($scope.dates[89]);
         $scope.loadMonth($scope.dates[89].getMonth());
 
     }
@@ -605,25 +608,33 @@ function airQualityControllerFunction($scope, $http) {
         
         days.each(function(i) {
             
-            console.log($(this));
+            //  use index parameter (from loadWeek not days.each) to find the correct date
+            var date = $scope.dates[index];
+            
+            //  reset all CSS classes
             $(this).removeClass();
 
             if(index >= 0 && index < 90) { 
-
-                $(this).html($scope.dates[index].getDate());
                 
-                //  if it's selected give it the selected class (used for initialization)
-                if($scope.dates[index].isSelected) { 
-                    
-                    $(this).addClass('selected'); 
-                    $scope.dates[index].isSelected = false;
-                    
-                }
+                //  attach date as an attribute
+                $(this).data('date', $scope.dateToStr(date));
+                console.log($(this).data('date'));
+                
+                //  append date to the inside of <td>
+                $(this).html(date.getDate());
+                
+                //  if it's selected give it the selected class
+                if($scope.selectedDate === $(this).data('date')) { $(this).addClass('selected'); }
                 
                 //  if day is not in the current month, give it gray styling
-                if($scope.dates[index].getMonth() != month) { $(this).addClass('gray-date'); }
+                if(date.getMonth() != month) { $(this).addClass('gray-date'); }
                 
-                $(this).click(function() {
+                //  on click, update the scope's selectedDate variable and add selected CSS class
+                $(this).click(function() { 
+                    
+                    $('.calendar .selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $scope.selectedDate = $(this).data('date'); 
                     
                 });
                 
@@ -638,6 +649,27 @@ function airQualityControllerFunction($scope, $http) {
             index++;
             
         });
+        
+    }
+    
+    $scope.dateToStr = function(date) {
+        
+        var year = '';
+        var month = '';
+        var day = '';
+        
+        //  get the year
+        year = date.getFullYear();
+        
+        //  get the month
+        if(date.getMonth() < 10) { month = '0'; }
+        month += date.getMonth() + 1;
+        
+        //  get the date
+        if(date.getDate() < 10) { day = '0'; }
+        day += date.getDate();
+        
+        return year + '-' + month + '-' + day;
         
     }
 
