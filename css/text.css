@@ -18,6 +18,10 @@
     font-size: 2rem;
 }
 
+.text-xxl {
+    font-size: 3.5rem;
+}
+
 .open-sans {
     font-family: 'Open Sans', sans-serif;
 }

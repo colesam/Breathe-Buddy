@@ -1,244 +1,253 @@
 <div ng-controller="airQualityCtrl" ng-init="init()">
-    <!-- Everything for the air quality page -->
-    <div class="row d-flex align-items-stretch" id="map-controls">
-        <div class="col-7 padding-sm">
-            <div class="ui-card">
-                <div class="card-title">
-                    <h2 class="title text-lg">Choose Location</h2>
-                </div>
-                <div class="card-content padding-top-md">
-                    <div class="form-group">
-                        <h3 class="bold text-md no-margin">Location</h3>
-                        <input ng-model="location" ng-keyup="submitLocation($event);" class="form-control" type="text" name="location"/>
-                    </div>
-                    <div class="form-group">
-                        <h3 class="bold text-md no-margin">Latitude / Longitude</h3>
-                        <input id="latLngInput" ng-model="lat_lng" ng-keyup="submitLocation($event);" class="form-control" type="text" name="lat_lng"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-5 padding-sm">
-            <div class="ui-card">
-                <div class="card-title">
-                    <h2 class="title text-lg">Choose Date</h2>
-                </div>
-                <div class="card-content row d-flex flex-row justify-content-between align-items-stretch" id="date-picker">
-                    <div class="col-4">
-                        <div class="month text-md d-flex flex-column justify-content-around align-items-stretch">
-                            <!-- This is where the month buttons go -->
+    <div class="page-padding">
+        <div class="row d-flex align-items-stretch" id="map-controls">
+            <div class="col-7">
+                <div class="padding-sm full-height no-padding-right">
+                    <div class="ui-card">
+                        <div class="card-title">
+                            <h2 class="title text-lg">Choose Location</h2>
+                        </div>
+                        <div class="card-content padding-top-md">
+                            <div class="form-group">
+                                <h3 class="bold text-md no-margin">Location</h3>
+                                <input ng-model="location" ng-keyup="submitLocation($event);" class="form-control" type="text" name="location"/>
+                            </div>
+                            <div class="form-group">
+                                <h3 class="bold text-md no-margin">Latitude / Longitude</h3>
+                                <input id="latLngInput" ng-model="lat_lng" ng-keyup="submitLocation($event);" class="form-control" type="text" name="lat_lng"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-8 calendar d-flex justify-content-center">
-                        <table class="text-center">
-                            <tr id="days-of-week">
-                                <th>Su</th>
-                                <th>Mo</th>
-                                <th>Tu</th>
-                                <th>We</th>
-                                <th>Th</th>
-                                <th>Fr</th>
-                                <th>Sa</th>
-                            </tr>
-                            <tr id="week1">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr id="week2">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr id="week3">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr id="week4">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr id="week5">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="padding-sm full-height no-padding-left">
+                    <div class="ui-card">
+                        <div class="card-title">
+                            <h2 class="title text-lg">Choose Date</h2>
+                        </div>
+                        <div class="card-content row d-flex flex-row justify-content-between align-items-stretch" id="date-picker">
+                            <div class="col-5">
+                                <div class="month text-md d-flex flex-column justify-content-around align-items-stretch">
+                                    <!-- This is where the month buttons go -->
+                                </div>
+                            </div>
+                            <div class="col-7 calendar d-flex justify-content-center">
+                                <table class="text-center">
+                                    <tr id="days-of-week">
+                                        <th>Su</th>
+                                        <th>Mo</th>
+                                        <th>Tu</th>
+                                        <th>We</th>
+                                        <th>Th</th>
+                                        <th>Fr</th>
+                                        <th>Sa</th>
+                                    </tr>
+                                    <tr id="week1">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr id="week2">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr id="week3">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr id="week4">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr id="week5">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row d-flex align-items-stretch">
-        <div class="col-7 padding-sm">
-            <div class="ui-card map">
-                <div id="map" class="full-size"></div>
-            </div>
-        </div>
-        <div class="col-5 padding-sm">
-            <div class="ui-card">
-                <div class="card-title">
-                    <h2 class="title text-lg">Results</h2>
-                </div>
-                <div class="card-content results">
-                    <div class="data roboto-mono text-center">
-                        <table ng-mouseover="mouseOverTable($event)" ng-mouseout="mouseOutTable()">
-                            <thead class="heading text-md">
-                                <tr>
-                                    <th>id</th>
-                                    <th>pm25</th>
-                                    <th>pm10</th>
-                                    <th>so2</th>
-                                    <th>no2</th>
-                                    <th>o3</th>
-                                    <th>co</th>
-                                    <th>bc</th>
-                                </tr>
-                            </thead>
-                            <tbody id="air-data-table">
-                                <tr>
-                                    <td class="text-sm">1</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">2</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">3</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">4</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">5</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">6</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">7</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">8</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">9</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">10</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">11</td>
-                                    <td class="text-sm">19.7%</td>
-                                    <td class="text-sm">30.0%</td>
-                                    <td class="text-sm">1.1%</td>
-                                    <td class="text-sm">4.5%</td>
-                                    <td class="text-sm">22.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                    <td class="text-sm">20.1%</td>
-                                </tr>
-                            </tbody>
-                            
-                        </table>
+        <div class="row d-flex align-items-stretch">
+            <div class="col-7">
+                <div class="padding-sm full-height no-padding-right">
+                    <div class="ui-card map">
+                        <div id="map" class="full-size"></div>
                     </div>
-                    <h3 class="bold text-md no-margin">Filter</h3>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="padding-sm full-height no-padding-left">
+                    <div class="ui-card">
+                        <div class="card-title">
+                            <h2 class="title text-lg">Results</h2>
+                        </div>
+                        <div class="card-content results">
+                            <div class="data roboto-mono text-center">
+                                <table ng-mouseover="mouseOverTable($event)" ng-mouseout="mouseOutTable()">
+                                    <thead class="heading text-md">
+                                        <tr>
+                                            <th>id</th>
+                                            <th>pm25</th>
+                                            <th>pm10</th>
+                                            <th>so2</th>
+                                            <th>no2</th>
+                                            <th>o3</th>
+                                            <th>co</th>
+                                            <th>bc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="air-data-table">
+                                        <tr>
+                                            <td class="text-sm">1</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">2</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">3</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">4</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">5</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">6</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">7</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">8</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">9</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">10</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-sm">11</td>
+                                            <td class="text-sm">19.7%</td>
+                                            <td class="text-sm">30.0%</td>
+                                            <td class="text-sm">1.1%</td>
+                                            <td class="text-sm">4.5%</td>
+                                            <td class="text-sm">22.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                            <td class="text-sm">20.1%</td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                            <h3 class="bold text-md no-margin">Filter</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="marker-popup">
-        test
+    
+        <div id="marker-popup">
+            test
+        </div>
     </div>
 </div>

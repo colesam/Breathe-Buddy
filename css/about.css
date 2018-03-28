@@ -1,0 +1,30 @@
+/*  COLORS
+    
+    DARK BLUE      #054754
+    GREEN          #fff9e0    
+    NEON GREEN     #53f4ff
+    GRAY           #a8a8a8
+    LIGHT GRAY     #f9f9f9
+*/
+
+#about-html .ui-card {
+    min-height: 100vh;
+}
+
+#about-html .page-padding {
+    padding-top: 60px;
+}
+
+.black-box {
+    position: relative;
+}
+
+#about-html h2 {
+    color: white;
+    position: absolute;
+        top: 100px;
+        right: 0;
+        left: 0;
+    font-weight: bold;
+    text-align: center;
+}

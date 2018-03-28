@@ -17,7 +17,8 @@
         <link href="external/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
         <!-- Custom Style -->
-        <link rel="stylesheet" href="css/main.css"/>
+        <link rel="stylesheet" href="css/app.css"/>
+        <link rel="stylesheet" href="css/about.css"/>
         <link rel="stylesheet" href="css/spacing.css"/>
         <link rel="stylesheet" href="css/text.css"/>
         <link rel="stylesheet" href="css/nav.css">
@@ -26,11 +27,14 @@
     <body class="open-sans no-margin" ng-app="airQuality" ng-controller="appCtrl" ng-init="init()">
         <nav class="d-flex flex-row align-items-center justify-content-end">
             <h1 class="nav-logo text-xl">Breathe Buddy</h1>
-            <a href="#" class="nav-link transitions active text-lg">App</a>
-            <a href="#" class="nav-link transitions text-lg">About the Project</a>
+            <a href="#" class="nav-link transitions active text-lg" id="app-nav">App</a>
+            <a href="#" class="nav-link transitions text-lg" id="about-nav">About the Project</a>
         </nav>
-        <div class="container page-padding">
-            <div ng-include="'html/air-quality.html'">
+        <div class="container">
+            <div ng-include="'html/air-quality.html'" id="app-html">
+                <!-- This will be loaded on command -->
+            </div>
+            <div class="d-none" ng-include="'html/about-the-project.html'" id="about-html">
                 <!-- This will be loaded on command -->
             </div>
         </div>

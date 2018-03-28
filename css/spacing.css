@@ -15,7 +15,7 @@
 }
 
 .page-padding{
-    padding-top: 30px;
+    padding-top: 90px;
 }
 
 .padding-top-md {
@@ -30,6 +30,15 @@
 .no-margin {
     margin: 0;
 }
+
+.no-padding-left {
+    padding-left: 0;
+}
+
+.no-padding-right {
+    padding-right: 0;
+}
+
 .no-padding {
     padding: 0;
 }
@@ -54,4 +63,8 @@
 
 .float-right {
     float: right;
+}
+
+.full-height {
+    height: 100%;
 }
