@@ -7,19 +7,11 @@
     LIGHT GRAY     #f9f9f9
 */
 
-#about-html .ui-card {
-    min-height: 100vh;
-}
-
-#about-html .page-padding {
-    padding-top: 60px;
-}
-
 .black-box {
     position: relative;
 }
 
-#about-html h2 {
+#about-html h1 {
     color: white;
     position: absolute;
         top: 100px;
