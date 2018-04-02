@@ -44,14 +44,6 @@ function airQualityControllerFunction($scope, $http) {
     $scope.init = function (){
         $scope.mapInit();
         $scope.dateInit();
-        
-        //  code for pinning table head to top of table
-        var $table = $('.data table');
-        $table.floatThead({
-            scrollContainer: function($table){
-                return $table.closest('.data');
-            }
-        });
 
         $scope.$watch('currentRowHover', $scope.setCurrentHover);
     };
@@ -299,14 +291,14 @@ function airQualityControllerFunction($scope, $http) {
             bc   = $scope.airData[i].bc   !== undefined ? $scope.airData[i].bc.value   : 'X';
 
             html +=     '<tr id="table-row-' + id + '">' +
-                            '<td id="data-id-'   + id + '" class="text-sm">' + id + '</td>' +
-                            '<td id="data-pm25-' + id + '" class="text-sm">' + pm25 + '</td>' +
-                            '<td id="data-pm10-' + id + '" class="text-sm">' + pm10 + '</td>' +
-                            '<td id="data-so2-'  + id + '" class="text-sm">' + so2 + '</td>' +
-                            '<td id="data-no2-'  + id + '" class="text-sm">' + no2 + '</td>' +
-                            '<td id="data-o3-'   + id + '" class="text-sm">' + o3 + '</td>' +
-                            '<td id="data-co-'   + id + '" class="text-sm">' + co + '</td>' +
-                            '<td id="data-bc-'   + id + '" class="text-sm">' + bc + '</td>' +
+                            '<td id="data-id-'   + id + '">' + id   + '</td>' +
+                            '<td id="data-pm25-' + id + '">' + pm25 + '</td>' +
+                            '<td id="data-pm10-' + id + '">' + pm10 + '</td>' +
+                            '<td id="data-so2-'  + id + '">' + so2  + '</td>' +
+                            '<td id="data-no2-'  + id + '">' + no2  + '</td>' +
+                            '<td id="data-o3-'   + id + '">' + o3   + '</td>' +
+                            '<td id="data-co-'   + id + '">' + co   + '</td>' +
+                            '<td id="data-bc-'   + id + '">' + bc   + '</td>' +
                         '</tr>';
         }
 

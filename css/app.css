@@ -61,7 +61,7 @@ th {
     background: #f9f9f9;
     border: 1px solid #a8a8a8;
     margin-bottom: 10px;
-    overflow: auto;
+    overflow-y: auto;
     position: relative;
     width: 100%;
     height: 250px;
@@ -70,13 +70,17 @@ th {
 .heading {
     border: 1px solid #a8a8a8;
     border-top: none;
-    border-left: none;
+    border-right: none;
     background: #f9f9f9;
     text-transform: uppercase;
 }
 
 .results {
     padding: 15px 15px 15px 15px;
+}
+
+.table {
+    margin-bottom: 0;
 }
 
 .data table {
@@ -87,6 +91,7 @@ th {
 
 .data table td {
     border: 1px solid #a8a8a8;
+    border-right: none;
 }
 
 

@@ -2,6 +2,10 @@
     text-align: center;
 }
 
+.text-xs {
+    font-size: 0.7rem;
+}
+
 .text-sm {
     font-size: 0.85rem;
 }

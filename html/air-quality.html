@@ -110,134 +110,35 @@
                             <h2 class="title text-lg">Results</h2>
                         </div>
                         <div class="card-content results">
-                            <div class="data roboto-mono text-center">
-                                <table ng-mouseover="mouseOverTable($event)" ng-mouseout="mouseOutTable()">
-                                    <thead class="heading text-md">
-                                        <tr>
-                                            <th>id</th>
-                                            <th>pm25</th>
-                                            <th>pm10</th>
-                                            <th>so2</th>
-                                            <th>no2</th>
-                                            <th>o3</th>
-                                            <th>co</th>
-                                            <th>bc</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="air-data-table">
-                                        <tr>
-                                            <td class="text-sm">1</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">2</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">3</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">4</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">5</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">6</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">7</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">8</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">9</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">10</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-sm">11</td>
-                                            <td class="text-sm">19.7%</td>
-                                            <td class="text-sm">30.0%</td>
-                                            <td class="text-sm">1.1%</td>
-                                            <td class="text-sm">4.5%</td>
-                                            <td class="text-sm">22.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                            <td class="text-sm">20.1%</td>
-                                        </tr>
-                                    </tbody>
-                                    
-                                </table>
+                            <div class="data-wrapper">
+                                <div class="data roboto-mono text-center">
+                                    <table class="table table-sm table-hover" ng-mouseover="mouseOverTable($event)" ng-mouseout="mouseOutTable()">
+                                        <thead class="heading text-sm">
+                                            <tr>
+                                                <th scope="col">id</th>
+                                                <th scope="col">pm25</th>
+                                                <th scope="col">pm10</th>
+                                                <th scope="col">so2</th>
+                                                <th scope="col">no2</th>
+                                                <th scope="col">o3</th>
+                                                <th scope="col">co</th>
+                                                <th scope="col">bc</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-xs" id="air-data-table">
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <h3 class="bold text-md no-margin">Filter</h3>
                         </div>
