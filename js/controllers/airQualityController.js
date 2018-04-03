@@ -351,6 +351,7 @@ function airQualityControllerFunction($scope, $http) {
         //clear old data
         $scope.airData = [];
 
+
         //add new data
         for(i=0; i<data.length; i++){
             if(data[i] !== undefined){
@@ -359,6 +360,8 @@ function airQualityControllerFunction($scope, $http) {
                 }
             }
         }
+
+        console.log($scope.airData.length);
 
         //clear old markers
         $scope.markers = [];
@@ -588,7 +591,7 @@ function airQualityControllerFunction($scope, $http) {
         $scope.loadWeek(month, 5, startIndex + 28);
             
         
-    }
+    };
     
     $scope.loadWeek = function(month, week, index) {
         
@@ -708,7 +711,7 @@ function airQualityControllerFunction($scope, $http) {
             Math.cos(c_lat) * Math.cos(ne_lat) * Math.cos(ne_lng - c_lng)
         );
 
-        return r_km *1000 // radius in meters
+        return r_km *1000; // radius in meters
     };
 
     /*************************************************** **************************************************************/
