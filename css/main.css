@@ -15,6 +15,14 @@ body {
     max-width: 100vw;
 }
 
+h4 {
+    font-weight: bold;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
 .row {
     margin-bottom: 20px;
 }

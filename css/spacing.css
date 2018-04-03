@@ -6,6 +6,10 @@
     margin: 24px;
 }
 
+.margin-bottom-md {
+    margin-bottom: 15px;
+}
+
 .padding-sm {
     padding: 8px;
 }
