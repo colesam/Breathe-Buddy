@@ -62,8 +62,10 @@ function airQualityControllerFunction($scope, $http) {
     /*******************************************   On Page Clicks*****   **********************************************/
     /*************************************************** **************************************************************/
 
-    $scope.toggleFilter = function(event){
-        //todo
+    $scope.updateFilter = function(){
+        $('#filter ul li').each(function(i){
+            console.log($(this).attr('title'));
+        });
     };
 
 
