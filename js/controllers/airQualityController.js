@@ -44,6 +44,8 @@ function airQualityControllerFunction($scope, $http) {
     $scope.init = function (){
         $scope.mapInit();
         $scope.dateInit();
+        
+        $('.select2-multi').select2();
 
         $scope.$watch('currentRowHover', $scope.setCurrentHover);
     };

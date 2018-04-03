@@ -10,10 +10,10 @@ airQuality.controller("appCtrl", function($scope, $http) {
 
 });
 
-// NAV JS
 
 $(document).ready(function() {
     
+    //  navigation click listeners
     $('#app-nav').click(() => {
         
         //  update nav css

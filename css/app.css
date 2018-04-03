@@ -67,6 +67,10 @@ th {
     height: 250px;
 }
 
+.filter-options {
+    margin-top: 15px;
+}
+
 .heading {
     border: 1px solid #a8a8a8;
     border-top: none;
@@ -77,6 +81,18 @@ th {
 
 .results {
     padding: 15px 15px 15px 15px;
+}
+
+.select2-multi {
+    width: 100%;
+}
+
+.select2-selection {
+    border-radius: 0px !important;
+}
+
+.select2-selection__choice {
+    font-size: 0.85rem;
 }
 
 .table {
