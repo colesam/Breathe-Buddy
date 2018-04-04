@@ -160,6 +160,14 @@ function airQualityControllerFunction($scope, $http) {
         element = $('<div></div>');
         element.addClass('container in-map');
         $('#map > div').append(element);
+        
+        //  place heatmap button inside google map
+        var heatmapBtn = $('<div></div>');
+        heatmapBtn.html('Heat Map');
+        heatmapBtn.addClass('heatmap-button btn btn-danger');
+        heatmapBtn.attr('id', 'heatmapToggle');
+        heatmapBtn.attr('ng-click', 'toggleHeatMap()');
+        $('#map > div').append(heatmapBtn);
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;

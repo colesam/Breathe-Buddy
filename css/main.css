@@ -28,7 +28,10 @@ p {
 }
 
 .heatmap-button{
-    margin: 10px;
+    position: absolute;
+        z-index: 2;
+        top: 50px;
+        left: 10px;
 }
 
 .form-control-custom {
