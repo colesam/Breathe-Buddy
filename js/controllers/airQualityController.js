@@ -164,7 +164,7 @@ function airQualityControllerFunction($scope, $http) {
         //  place heatmap button inside google map
         var heatmapBtn = $('<div></div>');
         heatmapBtn.html('Heat Map');
-        heatmapBtn.addClass('heatmap-button btn btn-danger');
+        heatmapBtn.addClass('heatmap-button btn transitions');
         heatmapBtn.attr('id', 'heatmapToggle');
         heatmapBtn.attr('ng-click', 'toggleHeatMap()');
         $('#map > div').append(heatmapBtn);

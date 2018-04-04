@@ -1,6 +1,7 @@
 /*  COLORS
     
     DARK BLUE      #054754
+    HOVER          #065868
     GREEN          #fff9e0    
     NEON GREEN     #53f4ff
     GRAY           #a8a8a8
@@ -18,6 +19,7 @@
 }
 
 .btn-custom:hover {
+    background: #065868;
     color: #53f4ff;
     cursor: pointer;
 }
@@ -127,6 +129,19 @@ th {
 
 
 /* MAP CSS */
+
+.heatmap-button {
+    background: #ce0000;
+    color: white;
+    position: absolute;
+        z-index: 2;
+        top: 50px;
+        left: 10px;
+}
+
+.heatmap-button:hover {
+    background: #ff0000;
+}
 
 .in-map {
     position: relative;

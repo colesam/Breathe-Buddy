@@ -1,6 +1,7 @@
 /*  COLORS
     
     DARK BLUE      #054754
+    HOVER          #065868
     GREEN          #fff9e0    
     NEON GREEN     #53f4ff
     GRAY           #a8a8a8
@@ -25,13 +26,6 @@ p {
 
 .form-control {
     border-radius: 0px;
-}
-
-.heatmap-button{
-    position: absolute;
-        z-index: 2;
-        top: 50px;
-        left: 10px;
 }
 
 .form-control-custom {
