@@ -37,6 +37,18 @@ function airQualityControllerFunction($scope, $http) {
         $scope.currentRowHover = null;
         $scope.heatmapOn = false;
 
+    /* Minimum Filter */
+        $scope.minPM25 = 0;
+        $scope.minPM10 = 0;
+        $scope.minSO2 = 0;
+        $scope.minNO2 = 0;
+        $scope.minO3 = 0;
+        $scope.minCO = 0;
+        $scope.minBC = 0;
+
+        $scope.mins = {pm25: 0, pm10: 0, so2: 0, no2: 0, o3: 0, co: 0, bc: 0};
+
+
 
 
 
@@ -63,6 +75,19 @@ function airQualityControllerFunction($scope, $http) {
     /*************************************************** **************************************************************/
     /*******************************************   On Page Actions   **************************************************/
     /*************************************************** **************************************************************/
+
+    $scope.updateMins = function(){
+        $scope.mins.pm25    = $scope.minPM25;
+        $scope.mins.pm10    = $scope.minPM10;
+        $scope.mins.so2     = $scope.minSO2;
+        $scope.mins.no2     = $scope.minNO2;
+        $scope.mins.o3      = $scope.minO3;
+        $scope.mins.co      = $scope.minCO;
+        $scope.mins.bc      = $scope.minBC;
+
+        console.log($scope.mins);
+
+    };
 
     $scope.updateFilter = function(){
         $scope.options = [];//['pm25', 'pm10', 'so2', 'no2', 'o3', 'co', 'bc'];
@@ -171,6 +196,8 @@ function airQualityControllerFunction($scope, $http) {
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
+
+        $scope.disableHeatMap();
     };
 
     $scope.getGeoCode = function(reqType, value, successCallback, failureCallback){
@@ -462,19 +489,23 @@ function airQualityControllerFunction($scope, $http) {
         //find if there are coordinates already there
         for(var i=0; i<$scope.airData.length; i++){
             if($scope.airData[i].coordinates.latitude === data.coordinates.latitude && $scope.airData[i].coordinates.longitude === data.coordinates.longitude){
-                //add to existing location
-                dataObj = {
-                    unit: data.unit,
-                    value: data.value,
-                    date: data.date
-                };
-
-                $scope.airData[i][data.parameter] = dataObj;
+                //found existing location
                 found = true;
+
+                //if above min
+                //if($scope.mins[data.unit] <= data.value) {
+                    dataObj = {
+                        unit: data.unit,
+                        value: data.value,
+                        date: data.date
+                    };
+
+                    $scope.airData[i][data.parameter] = dataObj;
+                //}
             }
         }
 
-        if(!found) {
+        if(!found ){//&& $scope.mins[data.unit] <= data.value) {
             //add new location
             var obj = {
                 coordinates: data.coordinates

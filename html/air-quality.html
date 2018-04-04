@@ -159,7 +159,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">PM25</span>
                                             </div>
-                                            <input type="text" class="form-control text-sm" placeholder="min" name="pm25-min">
+                                            <input type="text" class="form-control text-sm" placeholder="min" ng-model="minPM25" name="pm25-min">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -167,7 +167,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">PM10</span>
                                             </div>
-                                            <input type="text" class="form-control text-sm" placeholder="min" name="pm10-min">
+                                            <input type="text" class="form-control text-sm" placeholder="min" ng-model="minPM10" name="pm10-min">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -175,7 +175,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">SO2<span class="spacing">0</span></span>
                                             </div>
-                                            <input type="text" class="form-control text-sm" placeholder="min" name="so2-min">
+                                            <input type="text" class="form-control text-sm" placeholder="min" ng-model="minSO2" name="so2-min">
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">NO2<span class="spacing">0</span></span>
                                             </div>
-                                            <input type="text" class="form-control text-sm" placeholder="min" name="no2-min">
+                                            <input type="text" class="form-control text-sm" placeholder="min" ng-model="minNO2" name="no2-min">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -193,7 +193,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">O3<span class="spacing">00</span></span>
                                             </div>
-                                            <input type="text" class="form-control text-sm" placeholder="min" name="o3-min">
+                                            <input type="text" class="form-control text-sm" placeholder="min" ng-model="minO3" name="o3-min">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -201,7 +201,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">CO<span class="spacing">00</span></span>
                                             </div>
-                                            <input type="text" class="form-control text-sm" placeholder="min" name="co-min">
+                                            <input type="text" class="form-control text-sm" placeholder="min" ng-model="minCO" name="co-min">
                                         </div>
                                     </div>
                                 </div>
@@ -211,13 +211,13 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">BC<span class="spacing">00</span></span>
                                             </div>
-                                            <input type="text" class="form-control text-sm" placeholder="min" name="bc-min">
+                                            <input type="text" class="form-control text-sm" placeholder="min" ng-model="minBC" name="bc-min">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <button class="btn btn-custom full-width open-sans" id="filter-button">Filter Results</button>
+                                        <button class="btn btn-custom full-width open-sans" id="filter-button" ng-click="updateMins();">Filter Results</button>
                                     </div>
                                 </div>
                             </div>
