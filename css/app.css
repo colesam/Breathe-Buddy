@@ -20,7 +20,6 @@
 
 .btn-custom:hover {
     background: #065868;
-    color: #53f4ff;
     cursor: pointer;
 }
 
@@ -140,7 +139,7 @@ th {
 }
 
 .heatmap-button:hover {
-    background: #ff0000;
+    background: #ef0404;
 }
 
 .in-map {
