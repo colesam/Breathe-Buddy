@@ -1,7 +1,7 @@
 /**
  * Created by Mathew on 3/9/2018.
  */
-function airQualityControllerFunction($scope, $http) {
+function airQualityControllerFunction($scope, $http, $compile) {
 
     /* Air Quality API Constants */
         $scope.airQualityHome = 'https://api.openaq.org/v1/';
@@ -85,8 +85,9 @@ function airQualityControllerFunction($scope, $http) {
         $scope.mins.co      = $scope.minCO;
         $scope.mins.bc      = $scope.minBC;
 
-        console.log($scope.mins);
+        $scope.updateFilter();
 
+        $scope.updateMap();
     };
 
     $scope.updateFilter = function(){
@@ -98,25 +99,27 @@ function airQualityControllerFunction($scope, $http) {
             }
         });
 
-        if($scope.options.length === 1){
-            $scope.enableHeatMap();
-        }
-        else{
+        if($scope.options.length > 1){
             $scope.turnOffHeatMap();
-            $scope.disableHeatMap();
         }
 
         $scope.updateMap();
     };
 
     $scope.toggleHeatMap = function(){
-        $scope.heatmapOn = !$scope.heatmapOn;
 
-        if($scope.heatmapOn){
-            $scope.turnOnHeatMap();
+        if($scope.options.length === 1) {
+            $scope.heatmapOn = !$scope.heatmapOn;
+
+            if ($scope.heatmapOn) {
+                $scope.turnOnHeatMap();
+            }
+            else {
+                $scope.turnOffHeatMap();
+            }
         }
         else{
-            $scope.turnOffHeatMap();
+            alert('You can only turn on the heat map if you have one type selected!')
         }
     };
 
@@ -124,19 +127,31 @@ function airQualityControllerFunction($scope, $http) {
         var button = $('#heatmapToggle');
 
 
-        button.removeClass('btn-success');
-        button.addClass('btn-danger');
+        button.removeClass('heatmap-button-on');
+        button.addClass('heatmap-button-off');
 
         $scope.clearHeatMap();
+
+        $scope.updateMap();
     };
 
     $scope.turnOnHeatMap = function() {
         var button = $('#heatmapToggle');
 
-        button.removeClass('btn-danger');
-        button.addClass('btn-success');
+        button.removeClass('heatmap-button-off');
+        button.addClass('heatmap-button-on');
 
         $scope.updateHeatMap();
+
+        //clear old markers
+        for(var i=0; i<$scope.markers.length; i++){
+            $scope.markers[i].setMap(null);
+        }
+        $scope.markers = [];
+        $scope.updateClusters();
+
+
+
     };
 
     $scope.disableHeatMap = function(){
@@ -194,7 +209,7 @@ function airQualityControllerFunction($scope, $http) {
         //  place heatmap button inside google map
         element = $('<div></div>');
         element.html('Heat Map');
-        element.addClass('heatmap-button btn transitions');
+        element.addClass('heatmap-button btn transitions heatmap-button-off');
         element.attr('id', 'heatmapToggle');
         element.attr('ng-click', 'toggleHeatMap()');
         $('.map-side-content').append(element);
@@ -207,6 +222,7 @@ function airQualityControllerFunction($scope, $http) {
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
+
 
         $scope.disableHeatMap();
     };
@@ -413,11 +429,11 @@ function airQualityControllerFunction($scope, $http) {
     };
 
     $scope.updateClusters = function(){
-        if($scope.markerCluterManager !== null){
-            $scope.markerCluterManager = new MarkerClusterer($scope.map, [], $scope.MARKER_CLUSTER_OBJ);
+        $scope.markerCluterManager.clearMarkers();
+        for(var i=0; i<$scope.markers.length; i++){
+            $scope.markerCluterManager.addMarker($scope.markers[i]);
         }
 
-        $scope.markerCluterManager = new MarkerClusterer($scope.map, $scope.markers, $scope.MARKER_CLUSTER_OBJ);
         $scope.updateTable();
         $scope.updateLocation();
     };
@@ -495,7 +511,9 @@ function airQualityControllerFunction($scope, $http) {
         var heatMapData = [];
 
         for(var i=0; i<$scope.airData.length; i++){
-            heatMapData.push({location: new google.maps.LatLng($scope.airData[i].coordinates.latitude, $scope.airData[i].coordinates.longitude), weight: Math.pow(1000 * $scope.airData[i][$scope.options[0]].value, 5)});
+            if($scope.airData[i][$scope.options[0]] !== undefined) {
+                heatMapData.push({location: new google.maps.LatLng($scope.airData[i].coordinates.latitude, $scope.airData[i].coordinates.longitude), weight: Math.pow(1000 * $scope.airData[i][$scope.options[0]].value, 5)});
+            }
         }
 
         $scope.heatmap = new google.maps.visualization.HeatmapLayer({
@@ -507,36 +525,40 @@ function airQualityControllerFunction($scope, $http) {
     };
 
     $scope.populateMarkers = function(data){
-        var i;
+            var i;
 
-        //clear old data
-        $scope.airData = [];
+            //clear old data
+            $scope.airData = [];
 
 
-        //add new data
-        for(i=0; i<data.length; i++){
-            if(data[i] !== undefined){
-                if(data[i].coordinates !== undefined){
-                    $scope.addData(data[i]);
+            //add new data
+            for (i = 0; i < data.length; i++) {
+                if (data[i] !== undefined) {
+                    if (data[i].coordinates !== undefined) {
+                        $scope.addData(data[i]);
+                    }
                 }
             }
+
+            //clear old markers
+            for (i = 0; i < $scope.markers.length; i++) {
+                $scope.markers[i].setMap(null);
+            }
+            $scope.updateClusters();
+            $scope.markers = [];
+
+        if(!$scope.heatmapOn) {
+            //add new markers
+            for (i = 0; i < $scope.airData.length; i++) {
+                $scope.placeMarker({
+                    lat: $scope.airData[i].coordinates.latitude,
+                    lng: $scope.airData[i].coordinates.longitude
+                });
+            }
+
+            //cluster markers if we should
+            $scope.updateClusters();
         }
-
-        //clear old markers
-        for(i=0; i<$scope.markers.length; i++){
-            $scope.markers[i].setMap(null);
-        }
-        $scope.updateClusters();
-        $scope.markers = [];
-
-
-        //add new markers
-        for(i=0; i<$scope.airData.length; i++) {
-            $scope.placeMarker({lat: $scope.airData[i].coordinates.latitude, lng: $scope.airData[i].coordinates.longitude});
-        }
-
-        //cluster markers if we should
-        $scope.updateClusters();
     };
 
     $scope.addData = function(data){
@@ -550,7 +572,7 @@ function airQualityControllerFunction($scope, $http) {
                 found = true;
 
                 //if above min
-                //if($scope.mins[data.unit] <= data.value) {
+                if($scope.mins[data.parameter] <= data.value) {
                     dataObj = {
                         unit: data.unit,
                         value: data.value,
@@ -558,11 +580,11 @@ function airQualityControllerFunction($scope, $http) {
                     };
 
                     $scope.airData[i][data.parameter] = dataObj;
-                //}
+                }
             }
         }
 
-        if(!found ){//&& $scope.mins[data.unit] <= data.value) {
+        if(!found && $scope.mins[data.parameter] <= data.value) {
             //add new location
             var obj = {
                 coordinates: data.coordinates

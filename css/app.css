@@ -134,6 +134,14 @@ th {
     color: white;
 }
 
+.heatmap-button-on {
+    background-color: #1e7e34 !important;
+}
+
+.heatmap-button-off {
+    background-color: #ce0000 !important;
+}
+
 .heatmap-button:hover {
     background: #ef0404;
 }
