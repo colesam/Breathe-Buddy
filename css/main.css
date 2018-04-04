@@ -27,7 +27,15 @@ p {
     border-radius: 0px;
 }
 
+<<<<<<< HEAD
 .form-control-custom {
+=======
+.heatmap-button{
+    margin: 10px;
+}
+
+.form-control {
+>>>>>>> 6a6006f0c9760edfc7238f7da9d525773dade9e3
     font-size: 1rem;
     border-radius: 0px;
     border-top: none;

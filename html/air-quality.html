@@ -140,6 +140,7 @@
                                     </table>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <h3 class="bold text-md no-margin open-sans">Filter</h3>
                             <div class="filter-options">
                                 <div class="margin-bottom-sm">
@@ -224,7 +225,22 @@
                                         </div>
                                     </div>
                                 </div>
+=======
+                            <h3 class="bold text-md no-margin">Filter</h3>
+                            <div id="filter" class="filter-options" ng-click="updateFilter( );">
+                                <select id="filterOptions" class="select2-multi" name="particles[]" multiple="multiple">
+                                        <option value="pm25" selected>PM25</option>
+                                        <option value="pm25" selected>PM10</option>
+                                        <option value="pm25" selected>SO2</option>
+                                        <option value="pm25" selected>NO2</option>
+                                        <option value="pm25" selected>O3</option>
+                                        <option value="pm25" selected>CO</option>
+                                        <option value="pm25" selected>BC</option>
+                                </select>
+>>>>>>> 6a6006f0c9760edfc7238f7da9d525773dade9e3
                             </div>
+                            <button id="heatmapToggle" class="heatmap-button btn btn-danger" ng-click="toggleHeatMap()">Heat Map</button>
+
                         </div>
                     </div>
                 </div>
