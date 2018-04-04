@@ -1,6 +1,6 @@
 <div ng-controller="airQualityCtrl" ng-init="init()">
     <div class="page-padding">
-        <div class="row d-flex align-items-stretch" id="map-controls">
+        <div class="row margin-bottom-md d-flex align-items-stretch" id="map-controls">
             <div class="col-7">
                 <div class="padding-sm full-height">
                     <div class="ui-card">
@@ -10,11 +10,11 @@
                         <div class="card-content padding-top-md">
                             <div class="form-group">
                                 <h3 class="bold text-md no-margin">Location</h3>
-                                <input ng-model="location" ng-keyup="submitLocation($event);" class="form-control" type="text" name="location"/>
+                                <input ng-model="location" ng-keyup="submitLocation($event);" class="form-control-custom" type="text" name="location"/>
                             </div>
                             <div class="form-group">
                                 <h3 class="bold text-md no-margin">Latitude / Longitude</h3>
-                                <input id="latLngInput" ng-model="lat_lng" ng-keyup="submitLocation($event);" class="form-control" type="text" name="lat_lng"/>
+                                <input id="latLngInput" ng-model="lat_lng" ng-keyup="submitLocation($event);" class="form-control-custom" type="text" name="lat_lng"/>
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                         <div class="card-title">
                             <h2 class="title text-lg">Choose Date</h2>
                         </div>
-                        <div class="card-content row d-flex flex-row justify-content-between align-items-stretch" id="date-picker">
+                        <div class="card-content row margin-bottom-md d-flex flex-row justify-content-between align-items-stretch" id="date-picker">
                             <div class="col-5">
                                 <div class="month text-md d-flex flex-column justify-content-around align-items-stretch">
                                     <!-- This is where the month buttons go -->
@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <div class="row d-flex align-items-stretch">
+        <div class="row margin-bottom-md d-flex align-items-stretch">
             <div class="col-7">
                 <div class="padding-sm full-height">
                     <div class="ui-card map">
@@ -105,13 +105,13 @@
             </div>
             <div class="col-5">
                 <div class="padding-sm full-height">
-                    <div class="ui-card">
+                    <div class="ui-card roboto-mono">
                         <div class="card-title">
                             <h2 class="title text-lg">Results</h2>
                         </div>
                         <div class="card-content results">
                             <div class="data-wrapper">
-                                <div class="data roboto-mono text-center">
+                                <div class="data text-center">
                                     <table class="table table-sm table-hover" ng-mouseover="mouseOverTable($event)" ng-mouseout="mouseOutTable()">
                                         <thead class="heading text-sm">
                                             <tr>
@@ -140,17 +140,90 @@
                                     </table>
                                 </div>
                             </div>
-                            <h3 class="bold text-md no-margin">Filter</h3>
+                            <h3 class="bold text-md no-margin open-sans">Filter</h3>
                             <div class="filter-options">
-                                <select class="select2-multi" name="particles[]" multiple="multiple">
-                                        <option value="pm25" selected>PM25</option>
-                                        <option value="pm25" selected>PM10</option>
-                                        <option value="pm25" selected>SO2</option>
-                                        <option value="pm25" selected>NO2</option>
-                                        <option value="pm25" selected>O3</option>
-                                        <option value="pm25" selected>CO</option>
-                                        <option value="pm25" selected>BC</option>
-                                </select>
+                                <div class="margin-bottom-sm">
+                                    <select class="select2-multi" name="particles[]" multiple="multiple">
+                                            <option value="pm25" selected>PM25</option>
+                                            <option value="pm10" selected>PM10</option>
+                                            <option value="so2" selected>SO2</option>
+                                            <option value="no2" selected>NO2</option>
+                                            <option value="o3" selected>O3</option>
+                                            <option value="co" selected>CO</option>
+                                            <option value="bc" selected>BC</option>
+                                    </select>
+                                </div>
+                                <div class="row margin-bottom-sm">
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-sm" id="">PM25</span>
+                                            </div>
+                                            <input type="text" class="form-control text-sm" placeholder="min" name="pm25-min">
+                                            <input type="text" class="form-control text-sm" placeholder="max" name="pm25-max">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-sm" id="">PM10</span>
+                                            </div>
+                                            <input type="text" class="form-control text-sm" placeholder="min" name="pm10-min">
+                                            <input type="text" class="form-control text-sm" placeholder="max" name="pm10-max">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row margin-bottom-sm">
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-sm" id="">SO2<span class="spacing">0</span></span>
+                                            </div>
+                                            <input type="text" class="form-control text-sm" placeholder="min" name="so2-min">
+                                            <input type="text" class="form-control text-sm" placeholder="max" name="so2-max">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-sm" id="">NO2<span class="spacing">0</span></span>
+                                            </div>
+                                            <input type="text" class="form-control text-sm" placeholder="min" name="no2-min">
+                                            <input type="text" class="form-control text-sm" placeholder="max" name="no2-max">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row margin-bottom-sm">
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-sm" id="">O3<span class="spacing">00</span></span>
+                                            </div>
+                                            <input type="text" class="form-control text-sm" placeholder="min" name="o3-min">
+                                            <input type="text" class="form-control text-sm" placeholder="max" name="o3-max">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-sm" id="">CO<span class="spacing">00</span></span>
+                                            </div>
+                                            <input type="text" class="form-control text-sm" placeholder="min" name="co-min">
+                                            <input type="text" class="form-control text-sm" placeholder="max" name="co-max">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row margin-bottom-sm">
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-sm" id="">BC<span class="spacing">00</span></span>
+                                            </div>
+                                            <input type="text" class="form-control text-sm" placeholder="min" name="bc-min">
+                                            <input type="text" class="form-control text-sm" placeholder="max" name="bc-max">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

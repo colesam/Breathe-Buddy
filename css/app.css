@@ -79,6 +79,11 @@ th {
     text-transform: uppercase;
 }
 
+.input-group {
+    margin-top: 5px;
+    width: 100%;
+}
+
 .results {
     padding: 15px 15px 15px 15px;
 }
@@ -89,6 +94,7 @@ th {
 
 .select2-selection {
     border-radius: 0px !important;
+    background: #f9f9f9 !important;
 }
 
 .select2-selection__choice {
@@ -108,6 +114,11 @@ th {
 .data table td {
     border: 1px solid #a8a8a8;
     border-right: none;
+}
+
+.input-group-prepend span {
+    background: #e4e4e4;
+    border-radius: 0px;
 }
 
 
