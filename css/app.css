@@ -1,7 +1,7 @@
 /*  COLORS
     
     DARK BLUE      #054754
-    HOVER          #065868
+    HOVER          #086375
     GREEN          #fff9e0    
     NEON GREEN     #53f4ff
     GRAY           #a8a8a8
@@ -19,7 +19,7 @@
 }
 
 .btn-custom:hover {
-    background: #065868;
+    background: #086375;
     cursor: pointer;
 }
 
