@@ -105,6 +105,10 @@ th {
     margin-bottom: 0;
 }
 
+#filter-button {
+    margin-top: 5px;
+}
+
 .data table {
     table-layout: fixed;
     text-align: center;

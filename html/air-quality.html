@@ -8,11 +8,11 @@
                             <h2 class="title text-lg">Choose Location</h2>
                         </div>
                         <div class="card-content padding-top-md">
-                            <div class="form-group">
+                            <div class="form-group-custom">
                                 <h3 class="bold text-md no-margin">Location</h3>
                                 <input ng-model="location" ng-keyup="submitLocation($event);" class="form-control-custom" type="text" name="location"/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group-custom">
                                 <h3 class="bold text-md no-margin">Latitude / Longitude</h3>
                                 <input id="latLngInput" ng-model="lat_lng" ng-keyup="submitLocation($event);" class="form-control-custom" type="text" name="lat_lng"/>
                             </div>
@@ -154,79 +154,74 @@
                                     </select>
                                 </div>
                                 <div class="row margin-bottom-sm">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">PM25</span>
                                             </div>
                                             <input type="text" class="form-control text-sm" placeholder="min" name="pm25-min">
-                                            <input type="text" class="form-control text-sm" placeholder="max" name="pm25-max">
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">PM10</span>
                                             </div>
                                             <input type="text" class="form-control text-sm" placeholder="min" name="pm10-min">
-                                            <input type="text" class="form-control text-sm" placeholder="max" name="pm10-max">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row margin-bottom-sm">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">SO2<span class="spacing">0</span></span>
                                             </div>
                                             <input type="text" class="form-control text-sm" placeholder="min" name="so2-min">
-                                            <input type="text" class="form-control text-sm" placeholder="max" name="so2-max">
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                </div>
+                                <div class="row margin-bottom-sm">
+                                    <div class="col-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">NO2<span class="spacing">0</span></span>
                                             </div>
                                             <input type="text" class="form-control text-sm" placeholder="min" name="no2-min">
-                                            <input type="text" class="form-control text-sm" placeholder="max" name="no2-max">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row margin-bottom-sm">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">O3<span class="spacing">00</span></span>
                                             </div>
                                             <input type="text" class="form-control text-sm" placeholder="min" name="o3-min">
-                                            <input type="text" class="form-control text-sm" placeholder="max" name="o3-max">
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">CO<span class="spacing">00</span></span>
                                             </div>
                                             <input type="text" class="form-control text-sm" placeholder="min" name="co-min">
-                                            <input type="text" class="form-control text-sm" placeholder="max" name="co-max">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row margin-bottom-sm">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text text-sm" id="">BC<span class="spacing">00</span></span>
                                             </div>
                                             <input type="text" class="form-control text-sm" placeholder="min" name="bc-min">
-                                            <input type="text" class="form-control text-sm" placeholder="max" name="bc-max">
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button class="btn btn-custom form-control open-sans" id="filter-button">Filter Results</button>
                                     </div>
                                 </div>
                             </div>
                             <button id="heatmapToggle" class="heatmap-button btn btn-danger" ng-click="toggleHeatMap()">Heat Map</button>
-
                         </div>
                     </div>
                 </div>
