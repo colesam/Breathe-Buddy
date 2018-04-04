@@ -35,6 +35,7 @@ function airQualityControllerFunction($scope, $http) {
 
     /* Other Data */
         $scope.currentRowHover = null;
+        $scope.heatmapOn = false;
 
 
 
@@ -48,6 +49,7 @@ function airQualityControllerFunction($scope, $http) {
         $('.select2-multi').select2();
 
         $scope.$watch('currentRowHover', $scope.setCurrentHover);
+        $scope.disableHeatMap();
     };
 
 
@@ -59,13 +61,64 @@ function airQualityControllerFunction($scope, $http) {
 
 
     /*************************************************** **************************************************************/
-    /*******************************************   On Page Clicks*****   **********************************************/
+    /*******************************************   On Page Actions   **************************************************/
     /*************************************************** **************************************************************/
 
     $scope.updateFilter = function(){
+        $scope.options = [];//['pm25', 'pm10', 'so2', 'no2', 'o3', 'co', 'bc'];
+
         $('#filter ul li').each(function(i){
-            console.log($(this).attr('title'));
+            if($(this).attr('title') !== undefined) {
+                $scope.options.push($(this).attr('title').toLowerCase());
+            }
         });
+
+        if($scope.options.length === 1){
+            $scope.enableHeatMap();
+        }
+        else{
+            $scope.turnOffHeatMap();
+            $scope.disableHeatMap();
+        }
+
+        $scope.updateMap();
+    };
+
+    $scope.toggleHeatMap = function(){
+        $scope.heatmapOn = !$scope.heatmapOn;
+
+        if($scope.heatmapOn){
+            $scope.turnOnHeatMap();
+        }
+        else{
+            $scope.turnOffHeatMap();
+        }
+    };
+
+    $scope.turnOffHeatMap = function() {
+        var button = $('#heatmapToggle');
+
+
+        button.removeClass('btn-success');
+        button.addClass('btn-danger');
+
+        $scope.clearHeatMap();
+    };
+
+    $scope.turnOnHeatMap = function() {
+        var button = $('#heatmapToggle');
+
+        button.removeClass('btn-danger');
+        button.addClass('btn-success');
+
+        $scope.updateHeatMap();
+    };
+
+    $scope.disableHeatMap = function(){
+        $('#heatmapToggle').attr('disabled', 'disabled');
+    };
+    $scope.enableHeatMap = function(){
+        $('#heatmapToggle').removeAttr('disabled');
     };
 
 
@@ -161,7 +214,12 @@ function airQualityControllerFunction($scope, $http) {
         //get radius and set max radius at 10,000
         var radius = $scope.getRadius($scope.map.getBounds());
         radius = Math.round(Math.min(radius, 100000));
-        $scope.getAirQuality($scope.populateMarkers, $scope.lat_lng, radius, $scope.options, '2018-03-18T17:00:00-06:00', '2018-03-18T18:00:00-06:00', 10000);
+
+        var from = new Date($scope.selectedDate);
+        var to = new Date($scope.selectedDate);
+        to.setDate(to.getDate() + 1);
+
+        $scope.getAirQuality($scope.populateMarkers, $scope.lat_lng, radius, $scope.options, from, to, 10000);
     };
 
     $scope.updateLocation = function(){
@@ -188,7 +246,7 @@ function airQualityControllerFunction($scope, $http) {
             });
 
         }, function(location){
-            console.log('Unable to find adequate address from location: ' + location);
+            //can't find location
         });
     };
 
@@ -263,10 +321,13 @@ function airQualityControllerFunction($scope, $http) {
     };
 
     $scope.updateClusters = function(){
+        if($scope.markerCluterManager !== null){
+            $scope.markerCluterManager = new MarkerClusterer($scope.map, [], $scope.MARKER_CLUSTER_OBJ);
+        }
+
         $scope.markerCluterManager = new MarkerClusterer($scope.map, $scope.markers, $scope.MARKER_CLUSTER_OBJ);
-        $scope.updateLocation();
-        //$scope.updateHeatMap();
         $scope.updateTable();
+        $scope.updateLocation();
     };
 
 
@@ -286,13 +347,13 @@ function airQualityControllerFunction($scope, $http) {
         for(var i=0; i<$scope.airData.length; i++){
             id = i + 1;
 
-            pm25 = $scope.airData[i].pm25 !== undefined ? $scope.airData[i].pm25.value : 'X';
-            pm10 = $scope.airData[i].pm10 !== undefined ? $scope.airData[i].pm10.value : 'X';
-            so2  = $scope.airData[i].so2  !== undefined ? $scope.airData[i].so2.value  : 'X';
-            no2  = $scope.airData[i].no2  !== undefined ? $scope.airData[i].no2.value  : 'X';
-            o3   = $scope.airData[i].o3   !== undefined ? $scope.airData[i].o3.value   : 'X';
-            co   = $scope.airData[i].co   !== undefined ? $scope.airData[i].co.value   : 'X';
-            bc   = $scope.airData[i].bc   !== undefined ? $scope.airData[i].bc.value   : 'X';
+            pm25 = $scope.airData[i].pm25 !== undefined ? $scope.airData[i].pm25.value : '';
+            pm10 = $scope.airData[i].pm10 !== undefined ? $scope.airData[i].pm10.value : '';
+            so2  = $scope.airData[i].so2  !== undefined ? $scope.airData[i].so2.value  : '';
+            no2  = $scope.airData[i].no2  !== undefined ? $scope.airData[i].no2.value  : '';
+            o3   = $scope.airData[i].o3   !== undefined ? $scope.airData[i].o3.value   : '';
+            co   = $scope.airData[i].co   !== undefined ? $scope.airData[i].co.value   : '';
+            bc   = $scope.airData[i].bc   !== undefined ? $scope.airData[i].bc.value   : '';
 
             html +=     '<tr id="table-row-' + id + '">' +
                             '<td id="data-id-'   + id + '">' + id   + '</td>' +
@@ -332,11 +393,17 @@ function airQualityControllerFunction($scope, $http) {
         $scope.currentRowHover = null;
     };
 
+    $scope.clearHeatMap = function(){
+        if($scope.heatmap !== null) {
+            $scope.heatmap.setMap(null);
+        }
+    };
+
     $scope.updateHeatMap = function(){
         var heatMapData = [];
 
         for(var i=0; i<$scope.airData.length; i++){
-            heatMapData.push({location: new google.maps.LatLng($scope.airData[i].coordinates.latitude, $scope.airData[i].coordinates.longitude), weight: Math.pow($scope.airData[i].pm25.value, 5)});
+            heatMapData.push({location: new google.maps.LatLng($scope.airData[i].coordinates.latitude, $scope.airData[i].coordinates.longitude), weight: Math.pow(1000 * $scope.airData[i][$scope.options[0]].value, 5)});
         }
 
         $scope.heatmap = new google.maps.visualization.HeatmapLayer({
@@ -344,7 +411,7 @@ function airQualityControllerFunction($scope, $http) {
             map: $scope.map
         });
 
-        $scope.heatmap.set('radius', 50);
+        $scope.heatmap.set('radius', 75);
     };
 
     $scope.populateMarkers = function(data){
@@ -363,10 +430,13 @@ function airQualityControllerFunction($scope, $http) {
             }
         }
 
-        console.log($scope.airData.length);
-
         //clear old markers
+        for(i=0; i<$scope.markers.length; i++){
+            $scope.markers[i].setMap(null);
+        }
+        $scope.updateClusters();
         $scope.markers = [];
+
 
         //add new markers
         for(i=0; i<$scope.airData.length; i++) {
@@ -633,8 +703,9 @@ function airQualityControllerFunction($scope, $http) {
                     
                     $('.calendar .selected').removeClass('selected');
                     $(this).addClass('selected');
-                    $scope.selectedDate = $(this).data('date'); 
-                    
+                    $scope.selectedDate = $(this).data('date');
+
+                    $scope.updateMap();
                 });
                 
             } else {
