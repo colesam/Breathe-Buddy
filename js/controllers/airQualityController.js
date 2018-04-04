@@ -186,13 +186,24 @@ function airQualityControllerFunction($scope, $http) {
         element.addClass('container in-map');
         $('#map > div').append(element);
         
+        //  create container div for map side content
+        element = $('<div></div>');
+        element.addClass('map-side-content');
+        $('#map > div').append(element);
+        
         //  place heatmap button inside google map
-        var heatmapBtn = $('<div></div>');
-        heatmapBtn.html('Heat Map');
-        heatmapBtn.addClass('heatmap-button btn transitions');
-        heatmapBtn.attr('id', 'heatmapToggle');
-        heatmapBtn.attr('ng-click', 'toggleHeatMap()');
-        $('#map > div').append(heatmapBtn);
+        element = $('<div></div>');
+        element.html('Heat Map');
+        element.addClass('heatmap-button btn transitions');
+        element.attr('id', 'heatmapToggle');
+        element.attr('ng-click', 'toggleHeatMap()');
+        $('.map-side-content').append(element);
+        
+        //  create marker info div and place inside map
+        element = $('<div></div>');
+        element.addClass('d-none');
+        element.attr('id', 'marker-popup');
+        $('.map-side-content').append(element);
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
@@ -321,18 +332,64 @@ function airQualityControllerFunction($scope, $http) {
 
     $scope.closeMarkerPopup = function(){
         var element = $('#marker-popup');
-        element.css('visibility', 'hidden');
+        
+        element.html('');
+        element.removeClass('d-block');
+        element.addClass('d-none');
     };
 
     $scope.openMarkerPopup = function(){
-        // marker lat = this.internalPosition.lat();
-        // marker lng = this.internalPosition.lng();
-
+        
+        var dataElement;
+        var entry;
+        var dataLat;
+        var dataLng;
+        console.log(markerLat);
         var element = $('#marker-popup');
-
-        element.css('visibility', 'visible');
-        element.css('top', '0');
-        element.css('left', '0');
+        
+        //  grab latitude and longitude from marker on map, round to 0.0000
+        var markerLat = (Math.round(this.internalPosition.lat() * 10000) / 10000);
+        var markerLng = (Math.round(this.internalPosition.lng() * 10000) / 10000);
+        
+        //  create div for measurement display
+        element.addClass('text-sm')
+        element.html('<p class="bold text-sm">Marker Data:</p>');
+        
+        $scope.airData.forEach((data) => {
+            
+            //  grab lat and long from data entry and round to compare in if-statement below
+            dataLat = (Math.round(data.coordinates.latitude * 10000) / 10000);
+            dataLng = (Math.round(data.coordinates.longitude * 10000) / 10000);
+            
+            //  use if statement to find data entry that matches current marker's location
+            if(dataLat == markerLat && dataLng == markerLng) {
+                
+                //  create the div that will contain list of measurements
+                dataElement = $('<div></div>');
+                
+                //  append each measurement for current marker to dataElement div
+                $scope.options.forEach(option => {
+                    
+                    //  if data.option exists, record its value in the dataElement div
+                    if(data[option]) {
+                        entry = $('<p></p>');
+                        entry.html('<strong>' + option + ': </strong>' + data[option]['value'] + data[option]['unit'] );
+                        dataElement.append(entry);
+                    }
+                    
+                });
+                
+                //  append dataElement div to the popup display
+                element.append(dataElement);
+                
+            }
+            
+        });
+        
+        //  make the popup display visible
+        element.removeClass('d-none');
+        element.addClass('d-block');
+        
     };
 
     /*
