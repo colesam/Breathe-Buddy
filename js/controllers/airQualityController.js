@@ -468,13 +468,15 @@ function airQualityControllerFunction($scope, $http, $compile) {
         for(var i=0; i<$scope.airData.length; i++){
             id = i + 1;
 
-            pm25 = $scope.airData[i].pm25 !== undefined ? $scope.airData[i].pm25.value : '';
-            pm10 = $scope.airData[i].pm10 !== undefined ? $scope.airData[i].pm10.value : '';
-            so2  = $scope.airData[i].so2  !== undefined ? $scope.airData[i].so2.value  : '';
-            no2  = $scope.airData[i].no2  !== undefined ? $scope.airData[i].no2.value  : '';
-            o3   = $scope.airData[i].o3   !== undefined ? $scope.airData[i].o3.value   : '';
-            co   = $scope.airData[i].co   !== undefined ? $scope.airData[i].co.value   : '';
-            bc   = $scope.airData[i].bc   !== undefined ? $scope.airData[i].bc.value   : '';
+            pm25 = $scope.airData[i].pm25 !== undefined ? Math.round($scope.airData[i].pm25.value * 100) / 100 : '';
+            pm10 = $scope.airData[i].pm10 !== undefined ? Math.round($scope.airData[i].pm10.value * 100) / 100 : '';
+            so2  = $scope.airData[i].so2  !== undefined ? Math.round($scope.airData[i].so2.value  * 100) / 100 : '';
+            no2  = $scope.airData[i].no2  !== undefined ? Math.round($scope.airData[i].no2.value  * 100) / 100 : '';
+            o3   = $scope.airData[i].o3   !== undefined ? Math.round($scope.airData[i].o3.value   * 100) / 100 : '';
+            co   = $scope.airData[i].co   !== undefined ? Math.round($scope.airData[i].co.value   * 100) / 100 : '';
+            bc   = $scope.airData[i].bc   !== undefined ? Math.round($scope.airData[i].bc.value   * 100) / 100 : '';
+
+
 
             html +=     '<tr id="table-row-' + id + '">' +
                             '<td id="data-id-'   + id + '">' + id   + '</td>' +
