@@ -26,7 +26,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.heatmap = null;
         $scope.geocoder = null;
         $scope.fullscreen = false;
-        $scope.markerCluterManager = null;
+        $scope.markerClusterManager = null;
         $scope.loading = false;
 
     /* Date Picker Variables */
@@ -209,9 +209,15 @@ function airQualityControllerFunction($scope, $http, $compile) {
         //  place heatmap button inside google map
         element = $('<div></div>');
         element.html('Heat Map');
-        element.addClass('heatmap-button btn transitions heatmap-button-off');
+        element.addClass('heatmap-button btn transitions box-shadow heatmap-button-off');
         element.attr('id', 'heatmapToggle');
         element.attr('ng-click', 'toggleHeatMap()');
+        $('.map-side-content').append(element);
+        
+        //  place heatmap legend next to heatmap button
+        element = $('<img></img>');
+        element.addClass('box-shadow d-none');
+        element.attr('src', 'images/heatmap.jpg');
         $('.map-side-content').append(element);
         
         //  create marker info div and place inside map
@@ -429,9 +435,9 @@ function airQualityControllerFunction($scope, $http, $compile) {
     };
 
     $scope.updateClusters = function(){
-        $scope.markerCluterManager.clearMarkers();
+        $scope.markerClusterManager.clearMarkers();
         for(var i=0; i<$scope.markers.length; i++){
-            $scope.markerCluterManager.addMarker($scope.markers[i]);
+            $scope.markerClusterManager.addMarker($scope.markers[i]);
         }
 
         $scope.updateTable();
@@ -504,6 +510,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
     $scope.clearHeatMap = function(){
         if($scope.heatmap !== null) {
             $scope.heatmap.setMap(null);
+            $('#heatmap-legend').addClass('d-none');
         }
     };
 
@@ -522,6 +529,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         });
 
         $scope.heatmap.set('radius', 75);
+        $('#heatmap-legend').removeClass('d-none');
     };
 
     $scope.populateMarkers = function(data){
