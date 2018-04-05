@@ -13,7 +13,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
         $scope.API_LOC = 'https://www.google.com/maps/embed/v1/place';
         $scope.API_START = $scope.API_LOC + '?key=' + $scope.API_KEY + '&q=';
-        $scope.MARKER_CLUSTER_OBJ = {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'};
+        $scope.MARKER_CLUSTER_IMAGES = {imagePath: 'images/m'};
 
     /* User input */
         $scope.location = '';
@@ -195,7 +195,10 @@ function airQualityControllerFunction($scope, $http, $compile) {
 
         $scope.geocoder = new google.maps.Geocoder;
         $scope.lat_lng = latitude + ', ' + longitude;
-        
+
+        $scope.markerClusterManager = new MarkerClusterer($scope.map, $scope.markers, $scope.MARKER_CLUSTER_IMAGES);
+
+
         //  create container div for the map controls inside fullscreen map
         element = $('<div></div>');
         element.addClass('container in-map');
