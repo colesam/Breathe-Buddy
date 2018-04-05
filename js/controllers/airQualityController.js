@@ -13,7 +13,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
         $scope.API_LOC = 'https://www.google.com/maps/embed/v1/place';
         $scope.API_START = $scope.API_LOC + '?key=' + $scope.API_KEY + '&q=';
-        $scope.MARKER_CLUSTER_IMAGES = {imagePath: 'images/m'};
+        $scope.MARKER_CLUSTER_IMAGES = {imagePath: 'images/m'}; //images should be at least 52x52
 
     /* User input */
         $scope.location = '';
@@ -136,6 +136,8 @@ function airQualityControllerFunction($scope, $http, $compile) {
     };
 
     $scope.turnOnHeatMap = function() {
+        console.log('test');
+
         var button = $('#heatmapToggle');
 
         button.removeClass('heatmap-button-off');
@@ -216,7 +218,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         element.attr('id', 'heatmapToggle');
         element.attr('ng-click', 'toggleHeatMap()');
         $('.map-side-content').append(element);
-        
+
         //  place heatmap legend next to heatmap button
         element = $('<img></img>');
         element.addClass('box-shadow d-none');
@@ -228,6 +230,9 @@ function airQualityControllerFunction($scope, $http, $compile) {
         element.addClass('d-none');
         element.attr('id', 'marker-popup');
         $('.map-side-content').append(element);
+
+        $compile( $('.map-side-content').contents())($scope);
+
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
@@ -369,7 +374,6 @@ function airQualityControllerFunction($scope, $http, $compile) {
         var entry;
         var dataLat;
         var dataLng;
-        console.log(markerLat);
         var element = $('#marker-popup');
         
         //  grab latitude and longitude from marker on map, round to 0.0000
@@ -536,7 +540,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
     };
 
     $scope.populateMarkers = function(data){
-            var i;
+        var i;
 
             //clear old data
             $scope.airData = [];
@@ -685,6 +689,8 @@ function airQualityControllerFunction($scope, $http, $compile) {
             callBack(response.data.results);
         }, function errorCallback(response) {
             console.log('Failed to obtained air quality data!')
+            $scope.lat_lng = 'Unable to obtain data. Try refreshing the page.';
+            $scope.location = 'Unable to obtain data. Try refreshing the page.';
         });
     };
 
@@ -816,7 +822,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
                 
                 //  attach date as an attribute
                 $(this).data('date', $scope.dateToStr(date));
-                console.log($(this).data('date'));
+                //console.log($(this).data('date'));
                 
                 //  append date to the inside of <td>
                 $(this).html(date.getDate());
