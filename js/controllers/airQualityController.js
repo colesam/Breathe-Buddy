@@ -13,7 +13,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
         $scope.API_LOC = 'https://www.google.com/maps/embed/v1/place';
         $scope.API_START = $scope.API_LOC + '?key=' + $scope.API_KEY + '&q=';
-        $scope.MARKER_CLUSTER_IMAGES = {imagePath: 'images/m'};
+        $scope.MARKER_CLUSTER_IMAGES = {imagePath: 'images/m'}; //images should be at least 52x52
 
     /* User input */
         $scope.location = '';
@@ -369,7 +369,6 @@ function airQualityControllerFunction($scope, $http, $compile) {
         var entry;
         var dataLat;
         var dataLng;
-        console.log(markerLat);
         var element = $('#marker-popup');
         
         //  grab latitude and longitude from marker on map, round to 0.0000
@@ -536,7 +535,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
     };
 
     $scope.populateMarkers = function(data){
-            var i;
+        var i;
 
             //clear old data
             $scope.airData = [];
@@ -816,7 +815,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
                 
                 //  attach date as an attribute
                 $(this).data('date', $scope.dateToStr(date));
-                console.log($(this).data('date'));
+                //console.log($(this).data('date'));
                 
                 //  append date to the inside of <td>
                 $(this).html(date.getDate());
