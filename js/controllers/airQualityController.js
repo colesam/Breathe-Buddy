@@ -136,6 +136,8 @@ function airQualityControllerFunction($scope, $http, $compile) {
     };
 
     $scope.turnOnHeatMap = function() {
+        console.log('test');
+
         var button = $('#heatmapToggle');
 
         button.removeClass('heatmap-button-off');
@@ -216,7 +218,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         element.attr('id', 'heatmapToggle');
         element.attr('ng-click', 'toggleHeatMap()');
         $('.map-side-content').append(element);
-        
+
         //  place heatmap legend next to heatmap button
         element = $('<img></img>');
         element.addClass('box-shadow d-none');
@@ -228,6 +230,9 @@ function airQualityControllerFunction($scope, $http, $compile) {
         element.addClass('d-none');
         element.attr('id', 'marker-popup');
         $('.map-side-content').append(element);
+
+        $compile( $('.map-side-content').contents())($scope);
+
 
         google.maps.event.addListener($scope.map, 'idle', $scope.updateMap);
         $scope.map.bounds_changed = $scope.checkFullScreen;
@@ -684,6 +689,8 @@ function airQualityControllerFunction($scope, $http, $compile) {
             callBack(response.data.results);
         }, function errorCallback(response) {
             console.log('Failed to obtained air quality data!')
+            $scope.lat_lng = 'Unable to obtain data. Try refreshing the page.';
+            $scope.location = 'Unable to obtain data. Try refreshing the page.';
         });
     };
 
