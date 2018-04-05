@@ -272,7 +272,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
                 //  move map controls back to original place on DOM
                 var element = $('#map-controls');
                 element.removeClass('.in-map');
-                $('div[ng-controller="airQualityCtrl"]').prepend(element);
+                $('div[ng-controller="airQualityCtrl"] > .page-padding').prepend(element);
 
                 $scope.fullscreen = false;
                 
