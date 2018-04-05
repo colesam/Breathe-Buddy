@@ -115,14 +115,12 @@
                                     <table class="table table-sm table-hover" ng-mouseover="mouseOverTable($event)" ng-mouseout="mouseOutTable()">
                                         <thead class="heading text-sm">
                                             <tr>
-                                                <th scope="col">id</th>
                                                 <th scope="col">pm25</th>
                                                 <th scope="col">pm10</th>
                                                 <th scope="col">so2</th>
                                                 <th scope="col">no2</th>
                                                 <th scope="col">o3</th>
                                                 <th scope="col">co</th>
-                                                <th scope="col">bc</th>
                                             </tr>
                                         </thead>
                                         <tbody class="text-xs" id="air-data-table">
@@ -142,7 +140,7 @@
                             </div>
                             <h3 class="bold text-md no-margin open-sans">Filter</h3>
                             <div class="filter-options">
-                                <div id="filter" class="margin-bottom-sm" ng-click="updateFilter();">
+                                <div id="filter" class="margin-bottom-sm">
                                     <select class="select2-multi" name="particles[]" multiple="multiple">
                                             <option value="pm25" selected>PM25</option>
                                             <option value="pm10" selected>PM10</option>
@@ -150,7 +148,6 @@
                                             <option value="no2" selected>NO2</option>
                                             <option value="o3" selected>O3</option>
                                             <option value="co" selected>CO</option>
-                                            <option value="bc" selected>BC</option>
                                     </select>
                                 </div>
                                 <div class="row margin-bottom-sm">
@@ -202,16 +199,6 @@
                                                 <span class="input-group-text text-sm" id="">CO<span class="spacing">00</span></span>
                                             </div>
                                             <input type="text" class="form-control text-sm" placeholder="min" ng-model="minCO" name="co-min">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row margin-bottom-sm">
-                                    <div class="col-4">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text text-sm" id="">BC<span class="spacing">00</span></span>
-                                            </div>
-                                            <input type="text" class="form-control text-sm" placeholder="min" ng-model="minBC" name="bc-min">
                                         </div>
                                     </div>
                                 </div>

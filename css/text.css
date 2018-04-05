@@ -2,9 +2,15 @@
     text-align: center;
 }
 
+.text-xxs{
+    font-size: 0.5rem;
+}
+
 .text-xs {
     font-size: 0.7rem;
 }
+
+
 
 .text-sm {
     font-size: 0.85rem;

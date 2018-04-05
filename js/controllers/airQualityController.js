@@ -7,7 +7,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.airQualityHome = 'https://api.openaq.org/v1/';
         $scope.measurements = 'measurements';
         $scope.airData = [];
-        $scope.options = ['pm25', 'pm10', 'so2', 'no2', 'o3', 'co', 'bc'];
+        $scope.options = ['pm25', 'pm10', 'so2', 'no2', 'o3', 'co'];
 
     /* Google Maps API Constants */
         $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
@@ -27,7 +27,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.geocoder = null;
         $scope.fullscreen = false;
         $scope.markerClusterManager = null;
-        $scope.loading = false;
+        //$scope.loading = false;
 
     /* Date Picker Variables */
         $scope.datePicker   = $('#date-picker table');
@@ -44,9 +44,8 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.minNO2 = 0;
         $scope.minO3 = 0;
         $scope.minCO = 0;
-        $scope.minBC = 0;
 
-        $scope.mins = {pm25: 0, pm10: 0, so2: 0, no2: 0, o3: 0, co: 0, bc: 0};
+        $scope.mins = {pm25: 0, pm10: 0, so2: 0, no2: 0, o3: 0, co: 0};
 
 
 
@@ -83,7 +82,6 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.mins.no2     = $scope.minNO2;
         $scope.mins.o3      = $scope.minO3;
         $scope.mins.co      = $scope.minCO;
-        $scope.mins.bc      = $scope.minBC;
 
         $scope.updateFilter();
 
@@ -133,11 +131,14 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.clearHeatMap();
 
         $scope.updateMap();
+
+        var legend = $('#heatmapLegend');
+
+        legend.removeClass('d-block');
+        legend.addClass('d-none');
     };
 
     $scope.turnOnHeatMap = function() {
-        console.log('test');
-
         var button = $('#heatmapToggle');
 
         button.removeClass('heatmap-button-off');
@@ -152,8 +153,10 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.markers = [];
         $scope.updateClusters();
 
+        var legend = $('#heatmapLegend');
 
-
+        legend.removeClass('d-none');
+        legend.addClass('d-block');
     };
 
     $scope.disableHeatMap = function(){
@@ -220,8 +223,9 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $('.map-side-content').append(element);
 
         //  place heatmap legend next to heatmap button
-        element = $('<img></img>');
+        element = $('<img/>');
         element.addClass('box-shadow d-none');
+        element.attr('id', 'heatmapLegend');
         element.attr('src', 'images/heatmap.jpg');
         $('.map-side-content').append(element);
         
@@ -299,7 +303,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
     };
 
     $scope.updateLocation = function(){
-        $scope.loading = false;
+        //$scope.loading = false;
         $scope.lat_lng = (Math.round($scope.map.center.lat() * 1000) / 1000) + ', ' + (Math.round($scope.map.center.lng() * 1000) / 1000);
         var locArr = $scope.lat_lng.split(', ');
         var locObj = {lat: Number(locArr[0]), lng: Number(locArr[1])};
@@ -463,30 +467,28 @@ function airQualityControllerFunction($scope, $http, $compile) {
         var no2;
         var o3;
         var co;
-        var bc;
+
+
 
         for(var i=0; i<$scope.airData.length; i++){
             id = i + 1;
 
-            pm25 = $scope.airData[i].pm25 !== undefined ? Math.round($scope.airData[i].pm25.value * 100) / 100 : '';
-            pm10 = $scope.airData[i].pm10 !== undefined ? Math.round($scope.airData[i].pm10.value * 100) / 100 : '';
-            so2  = $scope.airData[i].so2  !== undefined ? Math.round($scope.airData[i].so2.value  * 100) / 100 : '';
-            no2  = $scope.airData[i].no2  !== undefined ? Math.round($scope.airData[i].no2.value  * 100) / 100 : '';
-            o3   = $scope.airData[i].o3   !== undefined ? Math.round($scope.airData[i].o3.value   * 100) / 100 : '';
-            co   = $scope.airData[i].co   !== undefined ? Math.round($scope.airData[i].co.value   * 100) / 100 : '';
-            bc   = $scope.airData[i].bc   !== undefined ? Math.round($scope.airData[i].bc.value   * 100) / 100 : '';
+            pm25 = $scope.airData[i].pm25 !== undefined ? {val: Math.round($scope.airData[i].pm25.value * 1000) / 1000, units: $scope.airData[i].pm25.unit }: {val:'',units:''};
+            pm10 = $scope.airData[i].pm10 !== undefined ? {val: Math.round($scope.airData[i].pm10.value * 1000) / 1000, units: $scope.airData[i].pm10.unit }: {val:'',units:''};
+            so2  = $scope.airData[i].so2  !== undefined ? {val: Math.round($scope.airData[i].so2.value  * 1000) / 1000, units: $scope.airData[i].so2.unit  }: {val:'',units:''};
+            no2  = $scope.airData[i].no2  !== undefined ? {val: Math.round($scope.airData[i].no2.value  * 1000) / 1000, units: $scope.airData[i].no2.unit  }: {val:'',units:''};
+            o3   = $scope.airData[i].o3   !== undefined ? {val: Math.round($scope.airData[i].o3.value   * 1000) / 1000, units: $scope.airData[i].o3.unit   }: {val:'',units:''};
+            co   = $scope.airData[i].co   !== undefined ? {val: Math.round($scope.airData[i].co.value   * 1000) / 1000, units: $scope.airData[i].co.unit   }: {val:'',units:''};
 
 
 
             html +=     '<tr id="table-row-' + id + '">' +
-                            '<td id="data-id-'   + id + '">' + id   + '</td>' +
-                            '<td id="data-pm25-' + id + '">' + pm25 + '</td>' +
-                            '<td id="data-pm10-' + id + '">' + pm10 + '</td>' +
-                            '<td id="data-so2-'  + id + '">' + so2  + '</td>' +
-                            '<td id="data-no2-'  + id + '">' + no2  + '</td>' +
-                            '<td id="data-o3-'   + id + '">' + o3   + '</td>' +
-                            '<td id="data-co-'   + id + '">' + co   + '</td>' +
-                            '<td id="data-bc-'   + id + '">' + bc   + '</td>' +
+                            '<td id="data-pm25-' + id + '"><span>' + pm25.val + '</span><span class="text-xxs">' + pm25.units + '</span></td>' +
+                            '<td id="data-pm10-' + id + '"><span>' + pm10.val + '</span><span class="text-xxs">' + pm10.units + '</span></td>' +
+                            '<td id="data-so2-'  + id + '"><span>' + so2.val  + '</span><span class="text-xxs">' + so2.units + '</span></td>' +
+                            '<td id="data-no2-'  + id + '"><span>' + no2.val  + '</span><span class="text-xxs">' + no2.units + '</span></td>' +
+                            '<td id="data-o3-'   + id + '"><span>' + o3.val   + '</span><span class="text-xxs">' + o3.units + '</span></td>' +
+                            '<td id="data-co-'   + id + '"><span>' + co.val   + '</span><span class="text-xxs">' + co.units + '</span></td>' +
                         '</tr>';
         }
 
@@ -680,7 +682,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
             parameters.limit = limit
         }
 
-        $scope.loading = true;
+        //$scope.loading = true;
         $scope.lat_lng = 'Loading...';
 
         $http({
@@ -836,11 +838,19 @@ function airQualityControllerFunction($scope, $http, $compile) {
                 if(date.getMonth() != month) { $(this).addClass('gray-date'); }
                 
                 //  on click, update the scope's selectedDate variable and add selected CSS class
-                $(this).click(function() { 
-                    
+                $(this).click(function() {
+
+
+
                     $('.calendar .selected').removeClass('selected');
                     $(this).addClass('selected');
                     $scope.selectedDate = $(this).data('date');
+
+                    //if not in current month...
+                    //if($(this).hasClass('gray-date')){
+                    //    console.log($(this).data('date'));
+                    //    $scope.loadMonth(Number($(this).data('date').split('-')[1]) - 1);
+                    //}
 
                     $scope.updateMap();
                 });
@@ -910,7 +920,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         var r = 6378.8;
 
         // degrees to radians (divide by 57.2958)
-        var ne_lat = bounds.getNorthEast().lat() / 57.2958;
+        var ne_lat = bounds.getCenter().lat() / 57.2958;
         var ne_lng = bounds.getNorthEast().lng() / 57.2958;
         var c_lat = bounds.getCenter().lat() / 57.2958;
         var c_lng = bounds.getCenter().lng() / 57.2958;
