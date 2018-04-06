@@ -75,6 +75,13 @@ function airQualityControllerFunction($scope, $http, $compile) {
     /*******************************************   On Page Actions   **************************************************/
     /*************************************************** **************************************************************/
 
+    $scope.filter = function(){
+        $scope.updateMins();
+        $scope.updateFilter();
+        $scope.updateMap();
+    };
+
+
     $scope.updateMins = function(){
         $scope.mins.pm25    = $scope.minPM25;
         $scope.mins.pm10    = $scope.minPM10;
@@ -82,10 +89,6 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.mins.no2     = $scope.minNO2;
         $scope.mins.o3      = $scope.minO3;
         $scope.mins.co      = $scope.minCO;
-
-        $scope.updateFilter();
-
-        $scope.updateMap();
     };
 
     $scope.updateFilter = function(){
@@ -450,9 +453,6 @@ function airQualityControllerFunction($scope, $http, $compile) {
         for(var i=0; i<$scope.markers.length; i++){
             $scope.markerClusterManager.addMarker($scope.markers[i]);
         }
-
-        $scope.updateTable();
-        $scope.updateLocation();
     };
 
 
@@ -577,6 +577,8 @@ function airQualityControllerFunction($scope, $http, $compile) {
 
             //cluster markers if we should
             $scope.updateClusters();
+            $scope.updateLocation();
+            $scope.updateTable();
         }
     };
 
@@ -692,7 +694,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         }).then(function successCallback(response) {
             callBack(response.data.results);
         }, function errorCallback(response) {
-            console.log('Failed to obtained air quality data!')
+            console.error('Failed to obtained air quality data!');
             $scope.lat_lng = 'Unable to obtain data. Try refreshing the page.';
             $scope.location = 'Unable to obtain data. Try refreshing the page.';
         });
@@ -839,8 +841,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
                 $(this).data('month', date.getMonth());
                 $(this).data('dateStr', $scope.dateToStr(date));
                 
-                //console.log($(this).data('date'));
-                
+
                 //  append date to the inside of <td>
                 $(this).html(date.getDate());
                 
