@@ -103,8 +103,6 @@ function airQualityControllerFunction($scope, $http, $compile) {
         if($scope.options.length > 1){
             $scope.turnOffHeatMap();
         }
-
-        $scope.updateMap();
     };
 
     $scope.toggleHeatMap = function(){
@@ -373,6 +371,11 @@ function airQualityControllerFunction($scope, $http, $compile) {
         element.html('');
         element.removeClass('d-block');
         element.addClass('d-none');
+
+        if($scope.currentRowHover !== null) {
+            $scope.currentRowHover.setIcon('images/arrow.png');
+        }
+        $scope.currentRowHover = null;
     };
 
     $scope.openMarkerPopup = function(){
@@ -399,6 +402,14 @@ function airQualityControllerFunction($scope, $http, $compile) {
             
             //  use if statement to find data entry that matches current marker's location
             if(dataLat == markerLat && dataLng == markerLng) {
+
+                if($scope.currentRowHover !== null) {
+                    $scope.currentRowHover.setIcon('images/arrow.png');
+                }
+                $scope.currentRowHover = this;
+
+                $scope.setCurrentHover();
+
                 
                 //  create the div that will contain list of measurements
                 dataElement = $('<div></div>');
