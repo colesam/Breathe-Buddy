@@ -745,12 +745,11 @@ function airQualityControllerFunction($scope, $http, $compile) {
                 button = $('<button></button>');
                 button.addClass('btn btn-custom');
                 button.html(monthNames[date.getMonth()]);
-                button.click(function() { 
+                button.data('month', date.getMonth());
+                button.click(function() {
                     
-                    //  when the button is clicked load the month
-                    $scope.loadMonth(date.getMonth());
-                    $('.month .selected').removeClass('selected');
-                    $(this).addClass('selected');
+                    var newMonth = Number($(this).data('month'));
+                    $scope.loadMonth(newMonth);
                     
                 });
                 
@@ -763,6 +762,8 @@ function airQualityControllerFunction($scope, $http, $compile) {
             }
             
         });
+        
+        
         
         //  load the month of today, set today to active
         $scope.selectedDate = $scope.dateToStr($scope.dates[89]);
@@ -777,6 +778,15 @@ function airQualityControllerFunction($scope, $http, $compile) {
         //  error check
         if(typeof(month) != 'number') { console.log('airQualityController.loadMonth(): parameter month must be a number, was typeof: ' + typeof(month)); }
         if(month < 0 || month > 11) { console.log('airQualityController.loadMonth(): parameter month must range from 0 to 11, value was: ' + month ); }
+
+        //  go through all month buttons, add selected class to proper month
+        $('.month button').each(function(i) {
+            
+            var buttonMonth = Number($(this).data('month'));
+            $(this).removeClass('selected');
+            if(month === buttonMonth) { $(this).addClass('selected'); }
+             
+        });
 
         //  find the first date of the month
         var notFound = true;
@@ -825,41 +835,49 @@ function airQualityControllerFunction($scope, $http, $compile) {
             if(index >= 0 && index < 90) { 
                 
                 //  attach date as an attribute
-                $(this).data('date', $scope.dateToStr(date));
+                $(this).data('date', date.getDate());
+                $(this).data('month', date.getMonth());
+                $(this).data('dateStr', $scope.dateToStr(date));
+                
                 //console.log($(this).data('date'));
                 
                 //  append date to the inside of <td>
                 $(this).html(date.getDate());
                 
                 //  if it's selected give it the selected class
-                if($scope.selectedDate === $(this).data('date')) { $(this).addClass('selected'); }
+                if($scope.selectedDate === $(this).data('dateStr')) { $(this).addClass('selected'); }
                 
                 //  if day is not in the current month, give it gray styling
                 if(date.getMonth() != month) { $(this).addClass('gray-date'); }
                 
+                //  remove all event listeners
+                $(this).off('click');
+                
                 //  on click, update the scope's selectedDate variable and add selected CSS class
                 $(this).click(function() {
 
-
-
+                    //  update selected class
                     $('.calendar .selected').removeClass('selected');
                     $(this).addClass('selected');
-                    $scope.selectedDate = $(this).data('date');
-
-                    //if not in current month...
-                    //if($(this).hasClass('gray-date')){
-                    //    console.log($(this).data('date'));
-                    //    $scope.loadMonth(Number($(this).data('date').split('-')[1]) - 1);
-                    //}
-
+                    
+                    //  update global selectedDate variable
+                    $scope.selectedDate = $(this).data('dateStr');
+                    
+                    //  if it was a gray date from another month, switch to that month
+                    if($(this).hasClass('gray-date')) { 
+                        var newMonth = Number($(this).data('month'));
+                        $scope.loadMonth(newMonth); 
+                    }
+                    
                     $scope.updateMap();
+                    
                 });
                 
             } else {
                 
                 //  day is outside the 90 day range and is therefore unavailable
-                $(this).html('00');
                 $(this).addClass('unavailable');
+                $(this).html('00');
                 
             }
             
