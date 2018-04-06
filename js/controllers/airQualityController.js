@@ -862,7 +862,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
                     
                     //  update global selectedDate variable
                     $scope.selectedDate = $(this).data('dateStr');
-                    
+                    console.log($scope.selectedDate);
                     //  if it was a gray date from another month, switch to that month
                     if($(this).hasClass('gray-date')) { 
                         var newMonth = Number($(this).data('month'));

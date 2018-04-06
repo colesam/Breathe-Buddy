@@ -39,6 +39,11 @@ p {
     width: 80%;
 }
 
+.form-control-custom:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 .form-group {
     margin-bottom: 30px;
 }
