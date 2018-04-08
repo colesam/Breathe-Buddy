@@ -10,7 +10,7 @@ function airQualityControllerFunction($scope, $http, $compile) {
         $scope.options = ['pm25', 'pm10', 'so2', 'no2', 'o3', 'co'];
 
     /* Google Maps API Constants */
-        $scope.API_KEY = 'AIzaSyAa9M8srClYjpe9v5kURZ9JEM1Vg3H0nNQ';
+        $scope.API_KEY = '';
         $scope.API_LOC = 'https://www.google.com/maps/embed/v1/place';
         $scope.API_START = $scope.API_LOC + '?key=' + $scope.API_KEY + '&q=';
         $scope.MARKER_CLUSTER_IMAGES = {imagePath: 'images/m'}; //images should be at least 52x52
