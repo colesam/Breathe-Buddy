@@ -30,11 +30,9 @@ An air quality web application built using AngularJS.
 </ul>
 
 <h2>How to Install</h2>
-<p>
-  In order to use this application you will need to sign up for a <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Google Maps API Key</a>.
-</p>
-<p>
-  Once you have your API key you will want to download the files and serve them in your local development environment. 
-  Next, modify the `$scope.API_KEY` variable in `js/controllers/airQualityController.js` to use the API key you signed up for.
-  Finally, run the index.html file in the root directory to use the application.
-</p>
+
+In order to use this application you will need to sign up for a <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Google Maps API Key</a>.
+
+Once you have your API key you will want to download the files and serve them in your local development environment. 
+Next, modify the `$scope.API_KEY` variable in `js/controllers/airQualityController.js` to use the API key you signed up for.
+Finally, run the index.html file in the root directory to use the application.
