@@ -29,7 +29,7 @@ user information about the air quality of a given location.
   <li>Contains "About the Project" page with profile pictures of each partner and short bios</li>
 </ul>
 
-<h2>How to Install</h2>
+<h2>Get Started</h2>
 
 In order to use this application you will need to sign up for a <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Google Maps API Key</a>.
 
