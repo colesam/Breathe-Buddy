@@ -2,16 +2,14 @@
 An air quality web application built using AngularJS.
 
 <h2>Description</h2>
-<p>
-  This project is a web application I built with my partner, Mathew Schlichting, for our CISC 375 Web Development course at 
-  the University of St. Thomas.
-</p>
-<p>
-  The project was built using HTML5, CSS3, Bootstrap 4.0, and AngularJS. It combines the 
-  <a href="https://developers.google.com/maps/" target="_blank">Google Maps API</a> with the 
-  <a href="https://docs.openaq.org/" target="_blank">Open AQ API</a> to create a web application that shows the 
-  user information about the air quality of a given location. 
-</p>
+
+This project is a web application I built with my partner, Mathew Schlichting, for our CISC 375 Web Development course at 
+the University of St. Thomas.
+
+The project was built using HTML5, CSS3, Bootstrap 4.0, and AngularJS. It combines the 
+<a href="https://developers.google.com/maps/" target="_blank">Google Maps API</a> with the 
+<a href="https://docs.openaq.org/" target="_blank">Open AQ API</a> to create a web application that shows the 
+user information about the air quality of a given location. 
 
 <h2>Features</h2>
 <ul>
