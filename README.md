@@ -1,6 +1,8 @@
 # Breathe-Buddy
 An air quality web application built using AngularJS.
 
+For more information about my contributions and process please visit the <a href="http://www.colesamdevelopment.com/portfolio/breathe-buddy.html" target="_blank">project page</a> on my portfolio website.
+
 <h2>Description</h2>
 
 This project is a web application I built with my partner, Mathew Schlichting, for our CISC 375 Web Development course at 
